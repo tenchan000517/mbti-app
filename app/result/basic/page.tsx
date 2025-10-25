@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import ScoreBar from '@/components/ScoreBar';
 import { basicQuestions } from '@/lib/questions';
 import { analyzeMBTI } from '@/lib/mbti-calculator';
 import { getTypeDescription } from '@/lib/type-descriptions';
+import { getTypeImage } from '@/lib/type-images';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 
 export default function BasicResultPage() {
@@ -47,14 +49,27 @@ export default function BasicResultPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-white rounded-lg shadow-lg p-8 mb-6">
-          <h1 className="text-4xl font-bold text-center text-gray-900 mb-2">
-            あなたのタイプ
-          </h1>
-          <div className="text-center mb-6">
-            <p className="text-6xl font-bold text-blue-600 mb-2">{mbtiType}</p>
-            <p className="text-2xl text-gray-700">{typeInfo.name}</p>
+        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
+          {/* タイプ画像とタイトル */}
+          <div className="relative w-full h-80 bg-blue-50">
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="relative w-48 h-48 mb-4">
+                <Image
+                  src={getTypeImage(mbtiType)}
+                  alt={typeInfo.name}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                あなたのタイプ
+              </h1>
+              <p className="text-6xl font-bold text-blue-600 mb-2">{mbtiType}</p>
+              <p className="text-2xl text-gray-700">{typeInfo.name}</p>
+            </div>
           </div>
+
+          <div className="p-8">
 
           <div className="border-t border-gray-200 pt-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">

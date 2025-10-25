@@ -1,5 +1,7 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { getAllTypeDescriptions } from '@/lib/type-descriptions';
+import { getTypeImage } from '@/lib/type-images';
 
 export default function Home() {
   const allTypes = getAllTypeDescriptions();
@@ -136,16 +138,26 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
             16のタイプ
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {allTypes.map((type) => (
               <div
                 key={type.type}
-                className="bg-gray-100 rounded-lg p-4 text-center hover:bg-blue-50 hover:shadow-md transition-all cursor-pointer"
+                className="bg-white rounded-lg border-2 border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-lg transition-all cursor-pointer group"
               >
-                <p className="text-2xl font-bold text-blue-600 mb-1">
-                  {type.type}
-                </p>
-                <p className="text-sm text-gray-700">{type.name}</p>
+                <div className="relative w-full h-40 bg-gray-100">
+                  <Image
+                    src={getTypeImage(type.type)}
+                    alt={type.name}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-4 text-center">
+                  <p className="text-xl font-bold text-blue-600 mb-1">
+                    {type.type}
+                  </p>
+                  <p className="text-sm text-gray-700">{type.name}</p>
+                </div>
               </div>
             ))}
           </div>
