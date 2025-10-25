@@ -34,16 +34,27 @@ export type MBTIType =
   | 'ISTJ' | 'ISFJ' | 'ESTJ' | 'ESFJ'
   | 'ISTP' | 'ISFP' | 'ESTP' | 'ESFP';
 
+// 影響力のある特性の型
+export interface InfluentialTrait {
+  label: string; // 例: "完遂主義"
+  percentage: number; // 0-100
+}
+
 // タイプ説明データの型
 export interface TypeDescription {
   type: MBTIType;
   name: string; // 例: "建築家"
   shortDescription: string; // 200-300文字
+  detailedDescription: string; // 詳細な性格説明（長文）
+  communicationStyle: string; // コミュニケーションスタイル
   characteristics: string[]; // 特徴リスト
   strengths: string[]; // 強み
   weaknesses: string[]; // 弱み
   careers: string[]; // 適職
   compatibleTypes: MBTIType[]; // 相性の良いタイプ
+  careerPath: string; // キャリアパスに関する説明
+  selfGrowth: string; // 自己成長に関する説明
+  influentialTraits: InfluentialTrait[]; // 影響力のある特性
 }
 
 // スコアのパーセンテージ表示用

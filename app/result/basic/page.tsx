@@ -112,6 +112,22 @@ export default function BasicResultPage() {
             </p>
           </div>
 
+          {/* 性格特性の詳細説明 */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">性格特性</h2>
+            <p className="text-gray-700 leading-relaxed mb-4">
+              {typeInfo.detailedDescription}
+            </p>
+          </div>
+
+          {/* コミュニケーションスタイル */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">コミュニケーションスタイル</h2>
+            <p className="text-gray-700 leading-relaxed">
+              {typeInfo.communicationStyle}
+            </p>
+          </div>
+
           <div className="border-t border-gray-200 pt-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">主な特徴</h2>
             <ul className="grid grid-cols-2 gap-2">
@@ -167,18 +183,76 @@ export default function BasicResultPage() {
             </div>
           </div>
 
+          {/* キャリアパス */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">あなたのキャリアパス</h2>
+            <p className="text-gray-700 leading-relaxed mb-6">
+              {typeInfo.careerPath}
+            </p>
+
+            {/* 影響力のある特性 */}
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">影響力のある特性</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {typeInfo.influentialTraits.map((trait, index) => (
+                  <div key={index} className="text-center">
+                    <div className="relative w-24 h-24 mx-auto mb-2">
+                      <svg className="w-24 h-24 transform -rotate-90">
+                        <circle
+                          cx="48"
+                          cy="48"
+                          r="40"
+                          stroke="#E5E7EB"
+                          strokeWidth="8"
+                          fill="none"
+                        />
+                        <circle
+                          cx="48"
+                          cy="48"
+                          r="40"
+                          stroke={index === 0 ? '#3B82F6' : index === 1 ? '#F59E0B' : index === 2 ? '#10B981' : '#A855F7'}
+                          strokeWidth="8"
+                          fill="none"
+                          strokeDasharray={`${2 * Math.PI * 40}`}
+                          strokeDashoffset={`${2 * Math.PI * 40 * (1 - trait.percentage / 100)}`}
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-xl font-bold text-gray-900">{trait.percentage}%</span>
+                      </div>
+                    </div>
+                    <p className="text-sm text-gray-700 font-medium">{trait.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* 自己成長 */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">あなたの自己成長</h2>
+            <p className="text-gray-700 leading-relaxed">
+              {typeInfo.selfGrowth}
+            </p>
+          </div>
+
           {/* 相性の良いタイプ */}
           <div className="border-t border-gray-200 pt-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">相性の良いタイプ</h2>
             <div className="flex gap-4">
-              {typeInfo.compatibleTypes.map((compatibleType, index) => (
-                <div
-                  key={index}
-                  className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 text-center"
-                >
-                  <p className="text-2xl font-bold text-purple-600">{compatibleType}</p>
-                </div>
-              ))}
+              {typeInfo.compatibleTypes.map((compatibleType, index) => {
+                const compatibleTypeInfo = getTypeDescription(compatibleType);
+                return (
+                  <div
+                    key={index}
+                    className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 text-center"
+                  >
+                    <p className="text-2xl font-bold text-purple-600">{compatibleType}</p>
+                    <p className="text-sm text-gray-700 mt-1">{compatibleTypeInfo.name}タイプ</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
