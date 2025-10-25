@@ -124,6 +124,64 @@ export default function BasicResultPage() {
             </ul>
           </div>
 
+          {/* 強みと弱み */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <h2 className="text-2xl font-bold text-green-600 mb-4">強み</h2>
+                <ul className="space-y-2">
+                  {typeInfo.strengths.map((strength, index) => (
+                    <li key={index} className="flex items-start text-gray-700">
+                      <span className="text-green-500 mr-2 mt-1">●</span>
+                      <span>{strength}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold text-orange-600 mb-4">弱み</h2>
+                <ul className="space-y-2">
+                  {typeInfo.weaknesses.map((weakness, index) => (
+                    <li key={index} className="flex items-start text-gray-700">
+                      <span className="text-orange-500 mr-2 mt-1">●</span>
+                      <span>{weakness}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {/* 適職 */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">適職</h2>
+            <div className="flex flex-wrap gap-3">
+              {typeInfo.careers.map((career, index) => (
+                <span
+                  key={index}
+                  className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium"
+                >
+                  {career}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* 相性の良いタイプ */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">相性の良いタイプ</h2>
+            <div className="flex gap-4">
+              {typeInfo.compatibleTypes.map((compatibleType, index) => (
+                <div
+                  key={index}
+                  className="bg-purple-50 border-2 border-purple-200 rounded-lg p-4 text-center"
+                >
+                  <p className="text-2xl font-bold text-purple-600">{compatibleType}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="bg-blue-50 rounded-lg p-6 mb-6">
             <p className="text-center text-gray-700 mb-4">
               さらに詳しい診断結果を見ませんか？
