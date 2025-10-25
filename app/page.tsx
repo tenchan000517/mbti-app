@@ -1,65 +1,184 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { getAllTypeDescriptions } from '@/lib/type-descriptions';
 
 export default function Home() {
+  const allTypes = getAllTypeDescriptions();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="bg-white py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            MBTI性格診断アプリ
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl text-gray-700 mb-8">
+            科学的根拠に基づく正確な診断
+          </p>
+          <Link
+            href="/test"
+            className="inline-block bg-blue-500 text-white px-10 py-4 rounded-lg text-xl font-semibold hover:bg-blue-600 transition-all shadow-lg"
+          >
+            診断をはじめる
+          </Link>
+        </div>
+      </section>
+
+      {/* MBTIとは Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+            MBTIとは
+          </h2>
+          <div className="bg-white rounded-lg shadow-md p-8">
+            <p className="text-gray-700 leading-relaxed mb-4">
+              MBTI（Myers-Briggs Type Indicator）は、外から観察しやすい行動特徴ではなく、
+              個々人が自然と行っている「ものの見方と判断の方法」など、
+              外からは観察できない「認知スタイル」に焦点を当てた性格類型理論です。
+            </p>
+            <p className="text-gray-700 leading-relaxed">
+              4つの指標（E/I, S/N, T/F, J/P）の組み合わせで、
+              16種類のタイプに分類され、自己理解や対人関係の改善に役立ちます。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 診断の特徴 Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
+            診断の特徴
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="bg-blue-50 rounded-lg p-6 border-2 border-blue-500">
+              <h3 className="text-xl font-bold text-blue-900 mb-3">
+                科学的根拠
+              </h3>
+              <p className="text-gray-700">
+                MBTI理論に基づいた正確な質問で、確実な判定を実現
+              </p>
+            </div>
+            <div className="bg-purple-50 rounded-lg p-6 border-2 border-purple-500">
+              <h3 className="text-xl font-bold text-purple-900 mb-3">
+                詳細な分析
+              </h3>
+              <p className="text-gray-700">
+                4つの次元を多角的に分析し、あなたの性格を正確に診断
+              </p>
+            </div>
+            <div className="bg-green-50 rounded-lg p-6 border-2 border-green-500">
+              <h3 className="text-xl font-bold text-green-900 mb-3">
+                わかりやすい結果
+              </h3>
+              <p className="text-gray-700">
+                視覚的なスコア表示で、直感的に理解できる結果を提供
+              </p>
+            </div>
+            <div className="bg-orange-50 rounded-lg p-6 border-2 border-orange-500">
+              <h3 className="text-xl font-bold text-orange-900 mb-3">
+                実用的な情報
+              </h3>
+              <p className="text-gray-700">
+                適職診断や相性診断など、実生活に役立つ情報を提供
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4つの次元 Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
+            4つの次元
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-bold text-blue-600 mb-3">
+                E (外向性) / I (内向性)
+              </h3>
+              <p className="text-gray-700">
+                エネルギーの方向と源。人と過ごすことで活力を得るか、一人の時間で回復するか。
+              </p>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-bold text-purple-600 mb-3">
+                S (感覚) / N (直観)
+              </h3>
+              <p className="text-gray-700">
+                情報の収集方法。具体的な事実を重視するか、可能性やパターンに着目するか。
+              </p>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-bold text-green-600 mb-3">
+                T (思考) / F (感情)
+              </h3>
+              <p className="text-gray-700">
+                判断の基準。論理と客観性を重視するか、価値観と人間関係を重視するか。
+              </p>
+            </div>
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h3 className="text-xl font-bold text-orange-600 mb-3">
+                J (判断) / P (知覚)
+              </h3>
+              <p className="text-gray-700">
+                外界への接し方。計画的に進めるか、柔軟に対応するか。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 16タイプ一覧 Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
+            16のタイプ
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {allTypes.map((type) => (
+              <div
+                key={type.type}
+                className="bg-gray-100 rounded-lg p-4 text-center hover:bg-blue-50 hover:shadow-md transition-all cursor-pointer"
+              >
+                <p className="text-2xl font-bold text-blue-600 mb-1">
+                  {type.type}
+                </p>
+                <p className="text-sm text-gray-700">{type.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-16 px-4 bg-blue-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">
+            あなたのタイプを知ろう
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            30問の質問に答えて、あなたの性格タイプを診断
+          </p>
+          <Link
+            href="/test"
+            className="inline-block bg-white text-blue-600 px-10 py-4 rounded-lg text-xl font-semibold hover:bg-gray-100 transition-all shadow-lg"
+          >
+            診断をはじめる
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-8 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <p className="text-gray-400">運営: ゆめスタ</p>
+          <p className="text-sm text-gray-500 mt-2">
+            ※ このアプリは公式MBTI®の代替ではなく、MBTI理論を参考にした性格診断です
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </footer>
     </div>
   );
 }
