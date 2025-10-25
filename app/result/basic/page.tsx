@@ -149,6 +149,7 @@ export default function BasicResultPage() {
               トップページに戻る
             </button>
           </div>
+          </div>
         </div>
 
         <div className="text-center text-sm text-gray-500">
