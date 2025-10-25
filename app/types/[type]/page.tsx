@@ -1,9 +1,7 @@
-'use client';
-
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { use } from 'react';
+import type { Metadata } from 'next';
 import { getTypeDescription, getAllTypeDescriptions } from '@/lib/type-descriptions';
 import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
@@ -15,8 +13,65 @@ interface PageProps {
   }>;
 }
 
-export default function TypeDetailPage({ params }: PageProps) {
-  const { type } = use(params);
+// 動的メタデータの生成
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { type } = await params;
+  const typeCode = type.toUpperCase() as MBTIType;
+
+  try {
+    const typeData = getTypeDescription(typeCode);
+
+    return {
+      title: `${typeCode}（${typeData.name}）の性格タイプ解説`,
+      description: `${typeData.shortDescription} ${typeCode}型の特徴、強み、弱み、適職を詳しく解説。就活での自己分析に役立つ情報満載。`,
+      keywords: [
+        typeCode,
+        `${typeCode}型`,
+        typeData.name,
+        'MBTI',
+        '性格診断',
+        '適職診断',
+        '就活',
+        '自己分析',
+      ],
+      openGraph: {
+        title: `${typeCode}（${typeData.name}）| 無料MBTI診断`,
+        description: typeData.shortDescription,
+        images: [
+          {
+            url: `/img/${typeData.name}.png`,
+            width: 800,
+            height: 800,
+            alt: `${typeCode} - ${typeData.name}`,
+          },
+        ],
+      },
+    };
+  } catch {
+    return {
+      title: 'タイプが見つかりません',
+    };
+  }
+}
+
+// 静的生成用
+export async function generateStaticParams() {
+  const types = [
+    'intj', 'intp', 'entj', 'entp',
+    'infj', 'infp', 'enfj', 'enfp',
+    'istj', 'isfj', 'estj', 'esfj',
+    'istp', 'isfp', 'estp', 'esfp',
+  ];
+
+  return types.map((type) => ({
+    type,
+  }));
+}
+
+export default async function TypeDetailPage({ params }: PageProps) {
+  const { type } = await params;
   const typeCode = type.toUpperCase() as MBTIType;
 
   // 有効なMBTIタイプかチェック
@@ -30,8 +85,41 @@ export default function TypeDetailPage({ params }: PageProps) {
   const typeInfo = getTypeDescription(typeCode);
   const { colors } = getTypeColors(typeCode);
 
+  // 構造化データ（JSON-LD）
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${typeCode}（${typeInfo.name}）の性格タイプ解説`,
+    description: typeInfo.shortDescription,
+    image: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/img/${typeInfo.name}.png`,
+    author: {
+      '@type': 'Organization',
+      name: '株式会社ゆめスタ',
+      url: 'https://yumesuta.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: '株式会社ゆめスタ',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
+      },
+    },
+    datePublished: '2025-10-25',
+    dateModified: '2025-10-25',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/types/${type}`,
+    },
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-gray-50">
       {/* ヘッダーセクション */}
       <section className={`${colors.primary} text-white pt-24 pb-16 px-4`}>
         <div className="max-w-4xl mx-auto">
@@ -197,7 +285,7 @@ export default function TypeDetailPage({ params }: PageProps) {
       <footer className="bg-gray-900 text-white py-8 px-4 mt-12">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-400">
-            運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline">ゆめスタ</a>
+            運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline">株式会社ゆめスタ</a>
           </p>
           <p className="text-sm text-gray-500 mt-2">
             ※ このアプリは公式MBTI®の代替ではなく、MBTI理論を参考にした性格診断です
@@ -205,5 +293,6 @@ export default function TypeDetailPage({ params }: PageProps) {
         </div>
       </footer>
     </div>
+    </>
   );
 }

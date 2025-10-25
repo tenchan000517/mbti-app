@@ -7,8 +7,101 @@ import { getTypeColors } from '@/lib/type-colors';
 export default function Home() {
   const allTypes = getAllTypeDescriptions();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebSite',
+        '@id': `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/#website`,
+        url: process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+        name: '無料MBTI診断',
+        description: '科学的根拠に基づいた無料のMBTI性格診断',
+        inLanguage: 'ja',
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/#organization`,
+        name: '株式会社ゆめスタ',
+        url: 'https://yumesuta.com',
+        logo: {
+          '@type': 'ImageObject',
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
+        },
+      },
+      {
+        '@type': 'WebApplication',
+        name: '無料MBTI診断',
+        description: '就活での自己分析、適職診断、キャリア選択に役立つ無料のMBTI性格診断ツール。30問の質問で16タイプを判定し、あなたの強みと適性を発見できます。',
+        applicationCategory: 'LifestyleApplication',
+        offers: {
+          '@type': 'Offer',
+          price: '0',
+          priceCurrency: 'JPY',
+        },
+        operatingSystem: 'Any',
+        browserRequirements: 'Requires JavaScript',
+      },
+    ],
+  };
+
+  const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'MBTIとは何ですか？',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'MBTI（Myers-Briggs Type Indicator）は、個々人が自然と行っている「ものの見方と判断の方法」など、外からは観察できない「認知スタイル」に焦点を当てた性格類型理論です。4つの指標（E/I, S/N, T/F, J/P）の組み合わせで16種類のタイプに分類されます。',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'この診断は無料ですか？',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'はい、完全に無料でご利用いただけます。30問の質問に答えるだけで、あなたのMBTI性格タイプを診断できます。',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '診断にかかる時間はどのくらいですか？',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: '約5〜10分程度で完了します。30問の質問に直感的に答えていただくだけです。',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '就活での自己分析に役立ちますか？',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'はい、MBTI診断は自己理解を深めるのに最適なツールです。あなたの強み、弱み、適職を知ることで、就職活動での自己PRや企業選びに役立ちます。',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: '16タイプにはどのようなものがありますか？',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'INTJ（建築家）、INTP（論理学者）、ENTJ（指揮官）、ENTP（討論者）、INFJ（提唱者）、INFP（仲介者）、ENFJ（主人公）、ENFP（運動家）、ISTJ（管理者）、ISFJ（擁護者）、ESTJ（幹部）、ESFJ（領事官）、ISTP（巨匠）、ISFP（冒険家）、ESTP（起業家）、ESFP（エンターテイナー）の16タイプがあります。',
+        },
+      },
+    ],
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section className="bg-white pt-24 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -242,12 +335,13 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-50 py-8 px-4 border-t border-gray-300">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-700">運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-500 hover:underline">ゆめスタ</a></p>
+          <p className="text-gray-700">運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-500 hover:underline">株式会社ゆめスタ</a></p>
           <p className="text-sm text-gray-600 mt-2">
             ※ このアプリは公式MBTI®の代替ではなく、MBTI理論を参考にした性格診断です
           </p>
         </div>
       </footer>
     </div>
+    </>
   );
 }

@@ -40,4 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-.vercel
+# 競合分析用の参考資料（著作権の問題があるためコミットしない）
+/contents/

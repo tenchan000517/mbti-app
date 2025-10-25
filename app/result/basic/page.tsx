@@ -287,7 +287,7 @@ export default function BasicResultPage() {
         </div>
 
         <div className="text-center text-sm text-gray-500">
-          運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">ゆめスタ</a>
+          運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 hover:underline">株式会社ゆめスタ</a>
         </div>
       </div>
     </div>
