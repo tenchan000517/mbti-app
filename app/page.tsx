@@ -185,7 +185,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-400">運営: ゆめスタ</p>
+          <p className="text-gray-400">運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline">ゆめスタ</a></p>
           <p className="text-sm text-gray-500 mt-2">
             ※ このアプリは公式MBTI®の代替ではなく、MBTI理論を参考にした性格診断です
           </p>
