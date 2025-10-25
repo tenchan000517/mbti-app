@@ -40,6 +40,18 @@ export interface InfluentialTrait {
   percentage: number; // 0-100
 }
 
+// 詳細セクションの型
+export interface DetailedSection {
+  title: string; // セクションタイトル
+  content: string; // セクション内容
+}
+
+// 引用文の型
+export interface Quote {
+  text: string; // 引用文
+  author: string; // 著者名
+}
+
 // タイプ説明データの型
 export interface TypeDescription {
   type: MBTIType;
@@ -55,6 +67,8 @@ export interface TypeDescription {
   careerPath: string; // キャリアパスに関する説明
   selfGrowth: string; // 自己成長に関する説明
   influentialTraits: InfluentialTrait[]; // 影響力のある特性
+  quote?: Quote; // 引用文（オプション）
+  detailedSections?: DetailedSection[]; // 詳細セクション（オプション）
 }
 
 // スコアのパーセンテージ表示用

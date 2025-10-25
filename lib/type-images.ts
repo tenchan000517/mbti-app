@@ -13,12 +13,12 @@ export const typeImages: Record<MBTIType, string> = {
   ENFJ: '/img/主人公.png',
   ENFP: '/img/運動家.png',
   ISTJ: '/img/管理者.png',
-  ISFJ: '/img/管理者.png', // 擁護者の画像が不足 - 管理者で代用
+  ISFJ: '/img/擁護者.png',
   ESTJ: '/img/幹部.png',
   ESFJ: '/img/領事.png',
   ISTP: '/img/巨匠.png',
   ISFP: '/img/冒険家.png',
-  ESTP: '/img/幹部.png', // 起業家の画像が不足 - 幹部で代用
+  ESTP: '/img/起業家.png',
   ESFP: '/img/エンターテイナー.png',
 };
 

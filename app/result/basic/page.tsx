@@ -47,7 +47,7 @@ export default function BasicResultPage() {
   const typeInfo = getTypeDescription(mbtiType);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-50 pt-24 pb-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
           {/* タイプ画像とタイトル */}
@@ -256,6 +256,7 @@ export default function BasicResultPage() {
             </div>
           </div>
 
+          {/* MVP: 詳細診断機能は未実装のため、一旦コメントアウト
           <div className="bg-blue-50 rounded-lg p-6 mb-6">
             <p className="text-center text-gray-700 mb-4">
               さらに詳しい診断結果を見ませんか？
@@ -272,6 +273,7 @@ export default function BasicResultPage() {
               </button>
             </div>
           </div>
+          */}
 
           <div className="text-center">
             <button

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getAllTypeDescriptions } from '@/lib/type-descriptions';
 import { getTypeImage } from '@/lib/type-images';
+import { getTypeColors } from '@/lib/type-colors';
 
 export default function Home() {
   const allTypes = getAllTypeDescriptions();
@@ -9,10 +10,10 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-white py-16 px-4">
+      <section className="bg-white pt-24 pb-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            MBTI性格診断アプリ
+            MBTI性格診断
           </h1>
           <p className="text-xl text-gray-700 mb-8">
             科学的根拠に基づく正確な診断
@@ -27,7 +28,7 @@ export default function Home() {
       </section>
 
       {/* MBTIとは Section */}
-      <section className="py-16 px-4 bg-gray-50">
+      <section id="about" className="py-16 px-4 bg-gray-50 scroll-mt-20">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
             MBTIとは
@@ -47,7 +48,7 @@ export default function Home() {
       </section>
 
       {/* 診断の特徴 Section */}
-      <section className="py-16 px-4 bg-white">
+      <section id="features" className="py-16 px-4 bg-white scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
             診断の特徴
@@ -89,93 +90,149 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 4つの次元 Section */}
+      {/* 4つの指標 Section */}
       <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
-            4つの次元
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">
+            あなたを決める4つの要素
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <p className="text-center text-gray-600 mb-10">
+            4つの指標の組み合わせで、16種類の性格タイプが決まります
+          </p>
+          <div className="space-y-6">
+            {/* E/I */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-blue-600 mb-3">
-                E (外向性) / I (内向性)
-              </h3>
-              <p className="text-gray-700">
-                エネルギーの方向と源。人と過ごすことで活力を得るか、一人の時間で回復するか。
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    E 外向性
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">人と過ごすことで活力を得る</p>
+                </div>
+                <div className="px-4">
+                  <div className="w-px h-16 bg-gray-300"></div>
+                </div>
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    I 内向性
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">一人の時間で回復する</p>
+                </div>
+              </div>
+              <p className="text-center text-gray-500 text-sm">エネルギーの方向と源</p>
             </div>
+
+            {/* S/N */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-purple-600 mb-3">
-                S (感覚) / N (直観)
-              </h3>
-              <p className="text-gray-700">
-                情報の収集方法。具体的な事実を重視するか、可能性やパターンに着目するか。
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    S 感覚
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">具体的な事実を重視</p>
+                </div>
+                <div className="px-4">
+                  <div className="w-px h-16 bg-gray-300"></div>
+                </div>
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    N 直観
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">可能性やパターンに着目</p>
+                </div>
+              </div>
+              <p className="text-center text-gray-500 text-sm">情報の収集方法</p>
             </div>
+
+            {/* T/F */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-green-600 mb-3">
-                T (思考) / F (感情)
-              </h3>
-              <p className="text-gray-700">
-                判断の基準。論理と客観性を重視するか、価値観と人間関係を重視するか。
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    T 思考
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">論理と客観性を重視</p>
+                </div>
+                <div className="px-4">
+                  <div className="w-px h-16 bg-gray-300"></div>
+                </div>
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    F 感情
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">価値観と人間関係を重視</p>
+                </div>
+              </div>
+              <p className="text-center text-gray-500 text-sm">判断の基準</p>
             </div>
+
+            {/* J/P */}
             <div className="bg-white rounded-lg shadow-md p-6">
-              <h3 className="text-xl font-bold text-orange-600 mb-3">
-                J (判断) / P (知覚)
-              </h3>
-              <p className="text-gray-700">
-                外界への接し方。計画的に進めるか、柔軟に対応するか。
-              </p>
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-orange-100 text-orange-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    J 判断
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">計画的に進める</p>
+                </div>
+                <div className="px-4">
+                  <div className="w-px h-16 bg-gray-300"></div>
+                </div>
+                <div className="flex-1 text-center">
+                  <div className="inline-block bg-orange-100 text-orange-700 px-6 py-3 rounded-lg font-bold text-lg">
+                    P 知覚
+                  </div>
+                  <p className="text-sm text-gray-600 mt-2">柔軟に対応する</p>
+                </div>
+              </div>
+              <p className="text-center text-gray-500 text-sm">外界への接し方</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* 16タイプ一覧 Section */}
-      <section className="py-16 px-4 bg-white">
+      <section id="types" className="py-16 px-4 bg-white scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
             16のタイプ
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {allTypes.map((type) => (
-              <div
-                key={type.type}
-                className="bg-white rounded-lg border-2 border-gray-200 overflow-hidden hover:border-blue-500 hover:shadow-lg transition-all cursor-pointer group"
-              >
-                <div className="relative w-full h-40 bg-gray-100">
-                  <Image
-                    src={getTypeImage(type.type)}
-                    alt={type.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-4 text-center">
-                  <p className="text-xl font-bold text-blue-600 mb-1">
-                    {type.type}
-                  </p>
-                  <p className="text-sm text-gray-700">{type.name}</p>
-                </div>
-              </div>
-            ))}
+            {allTypes.map((type) => {
+              const { colors } = getTypeColors(type.type);
+              return (
+                <Link
+                  key={type.type}
+                  href={`/types/${type.type.toLowerCase()}`}
+                  className={`rounded-lg border-2 border-gray-200 overflow-hidden hover:${colors.border} hover:shadow-lg transition-all cursor-pointer group`}
+                >
+                  <div className="relative w-full aspect-square">
+                    <Image
+                      src={getTypeImage(type.type)}
+                      alt={`${type.type} - ${type.name}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-blue-600">
+      <section className="py-16 px-4 bg-orange-400">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl font-bold text-white mb-4">
             あなたのタイプを知ろう
           </h2>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-orange-50 mb-8">
             30問の質問に答えて、あなたの性格タイプを診断
           </p>
           <Link
             href="/test"
-            className="inline-block bg-white text-blue-600 px-10 py-4 rounded-lg text-xl font-semibold hover:bg-gray-100 transition-all shadow-lg"
+            className="inline-block bg-white text-orange-600 px-10 py-4 rounded-lg text-xl font-semibold hover:bg-gray-100 transition-all shadow-lg"
           >
             診断をはじめる
           </Link>
@@ -183,10 +240,10 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 px-4">
+      <footer className="bg-gray-50 py-8 px-4 border-t border-gray-300">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-gray-400">運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 hover:underline">ゆめスタ</a></p>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-gray-700">運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-500 hover:underline">ゆめスタ</a></p>
+          <p className="text-sm text-gray-600 mt-2">
             ※ このアプリは公式MBTI®の代替ではなく、MBTI理論を参考にした性格診断です
           </p>
         </div>

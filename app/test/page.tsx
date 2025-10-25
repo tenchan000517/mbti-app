@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import ProgressBar from '@/components/ProgressBar';
 import QuestionCard from '@/components/QuestionCard';
 import { basicQuestions } from '@/lib/questions';
@@ -12,6 +13,7 @@ export default function TestPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [selectedValue, setSelectedValue] = useState<number | null>(null);
+  const [showBackWarning, setShowBackWarning] = useState(false);
 
   const currentQuestion = basicQuestions[currentIndex];
   const isLastQuestion = currentIndex === basicQuestions.length - 1;
@@ -62,9 +64,27 @@ export default function TestPage() {
 
   const canProceed = selectedValue !== null || existingAnswer !== undefined;
 
+  const handleBackToHome = () => {
+    if (answers.length > 0) {
+      setShowBackWarning(true);
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-50 pt-24 pb-8 px-4">
       <div className="max-w-3xl mx-auto">
+        {/* トップに戻るリンク */}
+        <div className="mb-4">
+          <button
+            onClick={handleBackToHome}
+            className="text-blue-600 hover:text-blue-700 hover:underline text-sm"
+          >
+            ← トップに戻る
+          </button>
+        </div>
+
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center">
             MBTI性格診断
@@ -102,6 +122,34 @@ export default function TestPage() {
             {isLastQuestion ? '結果を見る' : '次へ'}
           </button>
         </div>
+
+        {/* 警告モーダル */}
+        {showBackWarning && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-6 max-w-md w-full shadow-xl">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                確認
+              </h3>
+              <p className="text-gray-700 mb-6">
+                トップページに戻ると、入力した回答が全て消えてしまいます。よろしいですか？
+              </p>
+              <div className="flex gap-4">
+                <button
+                  onClick={() => setShowBackWarning(false)}
+                  className="flex-1 px-4 py-3 bg-gray-500 text-white rounded-lg font-semibold hover:bg-gray-600 transition-all"
+                >
+                  キャンセル
+                </button>
+                <button
+                  onClick={() => router.push('/')}
+                  className="flex-1 px-4 py-3 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all"
+                >
+                  トップに戻る
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
