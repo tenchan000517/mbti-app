@@ -6,6 +6,7 @@ import { CATEGORY_LABELS, BlogCategory } from '@/types/blog';
 import type { Metadata } from 'next';
 import { remark } from 'remark';
 import html from 'remark-html';
+import remarkGfm from 'remark-gfm';
 import RelatedArticles from '@/components/RelatedArticles';
 
 type Props = {
@@ -90,8 +91,9 @@ export default async function BlogPostPage({ params }: Props) {
     .map((link) => getPostBySlug(link.category as BlogCategory, link.slug))
     .filter((p) => p !== null);
 
-  // MarkdownをHTMLに変換
+  // MarkdownをHTMLに変換（GFM対応）
   const processedContent = await remark()
+    .use(remarkGfm)
     .use(html, { sanitize: false })
     .process(cleanContent);
   const contentHtml = processedContent.toString();
