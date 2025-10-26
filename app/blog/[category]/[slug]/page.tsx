@@ -6,6 +6,7 @@ import { CATEGORY_LABELS, BlogCategory } from '@/types/blog';
 import type { Metadata } from 'next';
 import { remark } from 'remark';
 import html from 'remark-html';
+import RelatedArticles from '@/components/RelatedArticles';
 
 type Props = {
   params: Promise<{
@@ -47,6 +48,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+// 関連記事リンクを抽出する関数
+function extractRelatedArticles(content: string) {
+  const relatedArticlesMatch = content.match(/## 関連記事\s+([\s\S]*?)(?=\n##|\n---|\n<script|$)/);
+
+  if (!relatedArticlesMatch) {
+    return { cleanContent: content, relatedLinks: [] };
+  }
+
+  const relatedSection = relatedArticlesMatch[1];
+  const linkRegex = /\[.*?\]\((\/blog\/([^/]+)\/([^)]+))\)/g;
+  const relatedLinks: { category: string; slug: string }[] = [];
+
+  let match;
+  while ((match = linkRegex.exec(relatedSection)) !== null) {
+    relatedLinks.push({
+      category: match[2],
+      slug: match[3],
+    });
+  }
+
+  // 関連記事セクションを削除したコンテンツ
+  const cleanContent = content.replace(/## 関連記事\s+[\s\S]*?(?=\n##|\n---|\n<script|$)/, '');
+
+  return { cleanContent, relatedLinks };
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const { category, slug } = await params;
   const post = getPostBySlug(category as BlogCategory, slug);
@@ -55,10 +82,18 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
+  // 関連記事を抽出
+  const { cleanContent, relatedLinks } = extractRelatedArticles(post.content);
+
+  // 関連記事のデータを取得
+  const relatedPosts = relatedLinks
+    .map((link) => getPostBySlug(link.category as BlogCategory, link.slug))
+    .filter((p) => p !== null);
+
   // MarkdownをHTMLに変換
   const processedContent = await remark()
     .use(html, { sanitize: false })
-    .process(post.content);
+    .process(cleanContent);
   const contentHtml = processedContent.toString();
 
   const jsonLd = {
@@ -150,6 +185,13 @@ export default async function BlogPostPage({ params }: Props) {
               dangerouslySetInnerHTML={{ __html: contentHtml }}
             />
           </div>
+
+          {/* 関連記事 */}
+          {relatedPosts.length > 0 && (
+            <div className="max-w-4xl mx-auto px-4 mt-12">
+              <RelatedArticles posts={relatedPosts} />
+            </div>
+          )}
 
           {/* CTA */}
           <div className="max-w-4xl mx-auto px-4 mt-16">

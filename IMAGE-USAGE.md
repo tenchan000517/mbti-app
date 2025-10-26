@@ -206,6 +206,12 @@
 | undraw_private-files_m2bw.png | 意思決定力を鍛えるMBTI別トレーニング【2025年版・性格タイプ別完全ガイド】 | growth | decision-making-training-by-mbti | 2025-10-26 |
 | undraw_gifts_4gy3.png | 自己肯定感を高めるアプローチ【2025年版・MBTI性格タイプ別完全ガイド】 | growth | improve-self-esteem-by-mbti | 2025-10-26 |
 | undraw_maintenance_4unj.png | 採用面接でMBTIを活用する方法【2025年版・企業・人事向け完全ガイド】 | corporate | mbti-recruitment-guide | 2025-10-26 |
+| undraw_playing-fetch_eij7.png | チームビルディングにMBTIを活かすコツ【2025年版・企業向け完全ガイド】 | corporate | team-building-with-mbti | 2025-10-26 |
+| undraw_deliveries_qutl.png | 性格タイプを考慮した人材配置のポイント【2025年版・人事向けガイド】 | corporate | talent-placement-by-mbti | 2025-10-26 |
+| undraw_basketball-kid_a3ss.png | 多様性のある職場づくりとMBTI【2025年版・企業向け実践ガイド】 | corporate | diversity-workplace-with-mbti | 2025-10-26 |
+| undraw_scooter_izdb.png | 社員のモチベーション管理にMBTIを活用【2025年版・人事・マネージャー向け完全ガイド】 | corporate | employee-motivation-with-mbti | 2025-10-27 |
+| undraw_stylish-girl-avatar_m8po.png | リーダー育成プログラムとMBTI【2025年版・企業向け完全ガイド】 | corporate | leadership-development-with-mbti | 2025-10-27 |
+| undraw_invest_t695.png | 離職率を下げるMBTI活用法【2025年版・企業向け完全ガイド】 | corporate | reduce-turnover-with-mbti | 2025-10-27 |
 
 ---
 
@@ -236,7 +242,7 @@
 
 ---
 
-**最終更新**: 2025-10-26
+**最終更新**: 2025-10-27
 **総画像数**: 93枚
-**使用済み**: 69枚
-**残り**: 24枚
+**使用済み**: 75枚
+**残り**: 18枚
