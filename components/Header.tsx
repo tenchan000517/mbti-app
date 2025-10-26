@@ -39,6 +39,12 @@ export function Header() {
                 タイプ一覧
               </a>
               <Link
+                href="/blog"
+                className="text-gray-700 hover:text-blue-600 transition-colors whitespace-nowrap"
+              >
+                記事
+              </Link>
+              <Link
                 href="/test"
                 className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all whitespace-nowrap ml-4"
               >
@@ -92,6 +98,13 @@ export function Header() {
             >
               タイプ一覧
             </a>
+            <Link
+              href="/blog"
+              onClick={() => setMobileMenuOpen(false)}
+              className="text-gray-700 hover:text-blue-600 py-2"
+            >
+              記事
+            </Link>
             <Link
               href="/test"
               className="bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-all text-center"

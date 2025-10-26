@@ -17,6 +17,22 @@ export default function Home() {
         name: '無料MBTI診断',
         description: '科学的根拠に基づいた無料のMBTI性格診断',
         inLanguage: 'ja',
+        image: {
+          '@type': 'ImageObject',
+          url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
+          width: 800,
+          height: 800,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: '株式会社ゆめスタ',
+          logo: {
+            '@type': 'ImageObject',
+            url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
+            width: 800,
+            height: 800,
+          },
+        },
       },
       {
         '@type': 'Organization',
@@ -26,6 +42,8 @@ export default function Home() {
         logo: {
           '@type': 'ImageObject',
           url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
+          width: 800,
+          height: 800,
         },
       },
       {
