@@ -1,0 +1,34 @@
+# ai.txt - AI Crawler Information
+# Site: mbti.yumesuta.com
+# Last Updated: 2026-03-07
+
+User-agent: *
+Allow: /
+Allow: /blog/
+Allow: /types/
+Disallow: /result/
+Disallow: /api/
+
+# Site Information
+Site-name: 無料MBTI診断 | 株式会社ゆめスタ
+Site-description: 科学的根拠に基づく無料MBTI性格診断。就活での自己分析、適職診断、キャリア選択に最適。30問の質問で16タイプを判定し、強みと適性を詳しく解説。高校生から社会人まで対応。
+Site-url: https://mbti.yumesuta.com
+Site-language: ja
+Site-type: WebApplication
+
+# Organization
+Organization-name: 株式会社ゆめスタ
+Organization-url: https://yumesuta.com
+Organization-description: 高校生の就職活動を支援する採用コンサルティング企業。三重県・愛知県を中心に、高卒採用支援・企業ブランディング・採用PR動画制作を展開。
+
+# Content Structure
+Primary-content-type: MBTI性格診断ツール、性格タイプ解説、就活・キャリア関連ブログ記事
+Content-categories: basics, career, corporate, growth, job-hunting
+Target-audience: 高校生、大学生、就職活動中の方、キャリア選択に悩む社会人、企業の採用担当者
+
+# Related Sites
+Related-site: https://yumesuta.com (株式会社ゆめスタ 公式サイト)
+Related-site: https://academy.yumesuta.com (ゆめスタアカデミー)
+
+# Sitemap
+Sitemap: https://mbti.yumesuta.com/sitemap.xml
