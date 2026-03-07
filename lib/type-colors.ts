@@ -81,6 +81,32 @@ export function getTemperamentGroup(type: MBTIType): TemperamentGroup {
 }
 
 /**
+ * 各MBTIタイプの固有カラー（HEX）
+ */
+export const typeHexColors: Record<MBTIType, string> = {
+  // 番人グループ（青系）
+  ISTJ: '#2B5B84',
+  ISFJ: '#87CEFA',
+  ESTJ: '#1E3A8A',
+  ESFJ: '#48D1CC',
+  // 外交官グループ（緑系）
+  INFJ: '#059669',
+  INFP: '#98FF98',
+  ENFJ: '#32CD32',
+  ENFP: '#ADFF2F',
+  // 分析家グループ（紫系）
+  INTJ: '#4B0082',
+  INTP: '#8B5CF6',
+  ENTJ: '#6A0DAD',
+  ENTP: '#D946EF',
+  // 探検家グループ（黄・オレンジ系）
+  ISTP: '#D97706',
+  ISFP: '#FBBF24',
+  ESTP: '#EA580C',
+  ESFP: '#FF7F50',
+};
+
+/**
  * MBTIタイプの色情報を取得
  */
 export function getTypeColors(type: MBTIType) {
@@ -88,6 +114,7 @@ export function getTypeColors(type: MBTIType) {
   return {
     group,
     colors: temperamentColors[group],
+    hex: typeHexColors[type],
   };
 }
 

@@ -8,6 +8,7 @@ import { basicQuestions } from '@/lib/questions';
 import { analyzeMBTI } from '@/lib/mbti-calculator';
 import { getTypeDescription } from '@/lib/type-descriptions';
 import { getTypeImage } from '@/lib/type-images';
+import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 
 export default function BasicResultPage() {
@@ -45,13 +46,14 @@ export default function BasicResultPage() {
   }
 
   const typeInfo = getTypeDescription(mbtiType);
+  const { hex } = getTypeColors(mbtiType);
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-8 px-4">
+    <div className="min-h-screen bg-gray-50 pt-36 pb-8 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-6">
           {/* タイプ画像とタイトル */}
-          <div className="relative w-full h-80 bg-blue-50">
+          <div className="relative w-full h-80" style={{ backgroundColor: hex }}>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="relative w-48 h-48 mb-4">
                 <Image
@@ -61,11 +63,11 @@ export default function BasicResultPage() {
                   className="object-contain"
                 />
               </div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              <h1 className="text-4xl font-bold text-white mb-2">
                 あなたのタイプ
               </h1>
-              <p className="text-6xl font-bold text-blue-600 mb-2">{mbtiType}</p>
-              <p className="text-2xl text-gray-700">{typeInfo.name}</p>
+              <p className="text-6xl font-bold text-white mb-2">{mbtiType}</p>
+              <p className="text-2xl text-white/90">{typeInfo.name}</p>
             </div>
           </div>
 

@@ -124,7 +124,7 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <div className="min-h-screen bg-gray-50">
-        <article className="pt-24 pb-16">
+        <article className="pt-36 pb-16">
           {/* アイキャッチ画像 */}
           {post.frontmatter.eyecatch && (
             <div className="w-full max-w-2xl mx-auto mb-8 px-4">

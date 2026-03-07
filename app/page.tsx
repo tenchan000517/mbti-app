@@ -121,14 +121,28 @@ export default function Home() {
       />
       <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-white pt-24 pb-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            MBTI性格診断
-          </h1>
-          <p className="text-xl text-gray-700 mb-8">
-            科学的根拠に基づく正確な診断
-          </p>
+      <section className="pt-28 pb-16 px-4">
+        <div className="max-w-5xl mx-auto text-center">
+          <h1 className="sr-only">MBTI性格診断 - 科学的根拠に基づく正確な診断</h1>
+          {/* アイキャッチ画像 - PC用とモバイル用で切り替え */}
+          <div className="mb-10">
+            <Image
+              src="/img/eyecatch-pc.png"
+              alt="MBTI性格診断 - 科学的根拠に基づく無料の性格診断"
+              width={1200}
+              height={630}
+              className="hidden md:block w-full rounded-2xl shadow-xl"
+              priority
+            />
+            <Image
+              src="/img/eyecatch-mobile.png"
+              alt="MBTI性格診断 - 科学的根拠に基づく無料の性格診断"
+              width={600}
+              height={1000}
+              className="block md:hidden w-full max-w-sm mx-auto rounded-2xl shadow-xl"
+              priority
+            />
+          </div>
           <Link
             href="/test"
             className="inline-block bg-blue-500 text-white px-10 py-4 rounded-lg text-xl font-semibold hover:bg-blue-600 transition-all shadow-lg"
@@ -139,7 +153,7 @@ export default function Home() {
       </section>
 
       {/* MBTIとは Section */}
-      <section id="about" className="py-16 px-4 bg-gray-50 scroll-mt-20">
+      <section id="about" className="py-16 px-4 bg-gray-50 scroll-mt-36">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-6 text-center">
             MBTIとは
@@ -159,13 +173,16 @@ export default function Home() {
       </section>
 
       {/* 診断の特徴 Section */}
-      <section id="features" className="py-16 px-4 bg-white scroll-mt-20">
+      <section id="features" className="py-16 px-4 bg-white scroll-mt-36">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
             診断の特徴
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-blue-50 rounded-lg p-6 border-2 border-blue-500">
+            <div className="bg-blue-50 rounded-xl p-6 border-2 border-blue-500 flex flex-col items-center text-center">
+              <div className="relative w-36 h-36 mb-4 overflow-hidden">
+                <Image src="/img/character/ESFJ.png" alt="領事" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+              </div>
               <h3 className="text-xl font-bold text-blue-900 mb-3">
                 科学的根拠
               </h3>
@@ -173,7 +190,10 @@ export default function Home() {
                 MBTI理論に基づいた正確な質問で、確実な判定を実現
               </p>
             </div>
-            <div className="bg-purple-50 rounded-lg p-6 border-2 border-purple-500">
+            <div className="bg-purple-50 rounded-xl p-6 border-2 border-purple-500 flex flex-col items-center text-center">
+              <div className="relative w-36 h-36 mb-4 overflow-hidden">
+                <Image src="/img/character/INTJ.png" alt="建築家" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+              </div>
               <h3 className="text-xl font-bold text-purple-900 mb-3">
                 詳細な分析
               </h3>
@@ -181,7 +201,10 @@ export default function Home() {
                 4つの次元を多角的に分析し、あなたの性格を正確に診断
               </p>
             </div>
-            <div className="bg-green-50 rounded-lg p-6 border-2 border-green-500">
+            <div className="bg-green-50 rounded-xl p-6 border-2 border-green-500 flex flex-col items-center text-center">
+              <div className="relative w-36 h-36 mb-4 overflow-hidden">
+                <Image src="/img/character/ENFJ.png" alt="主人公" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+              </div>
               <h3 className="text-xl font-bold text-green-900 mb-3">
                 わかりやすい結果
               </h3>
@@ -189,7 +212,10 @@ export default function Home() {
                 視覚的なスコア表示で、直感的に理解できる結果を提供
               </p>
             </div>
-            <div className="bg-orange-50 rounded-lg p-6 border-2 border-orange-500">
+            <div className="bg-orange-50 rounded-xl p-6 border-2 border-orange-500 flex flex-col items-center text-center">
+              <div className="relative w-36 h-36 mb-4 overflow-hidden">
+                <Image src="/img/character/ESTJ.png" alt="幹部" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+              </div>
               <h3 className="text-xl font-bold text-orange-900 mb-3">
                 実用的な情報
               </h3>
@@ -212,98 +238,126 @@ export default function Home() {
           </p>
           <div className="space-y-6">
             {/* E/I */}
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/ENFP.png" alt="運動家（外向型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold text-lg">
                     E 外向性
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">人と過ごすことで活力を得る</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">人と過ごすことで活力を得る</p>
                 </div>
-                <div className="px-4">
-                  <div className="w-px h-16 bg-gray-300"></div>
+                <div className="px-4 flex flex-col items-center">
+                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
+                  <div className="w-px h-12 bg-gray-300"></div>
                 </div>
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/INFP.png" alt="仲介者（内向型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold text-lg">
                     I 内向性
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">一人の時間で回復する</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">一人の時間で回復する</p>
                 </div>
               </div>
-              <p className="text-center text-gray-500 text-sm">エネルギーの方向と源</p>
+              <p className="text-center text-gray-600 text-base font-medium">エネルギーの方向と源</p>
             </div>
 
             {/* S/N */}
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/ISTJ.png" alt="管理者（感覚型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-bold text-lg">
                     S 感覚
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">具体的な事実を重視</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">具体的な事実を重視</p>
                 </div>
-                <div className="px-4">
-                  <div className="w-px h-16 bg-gray-300"></div>
+                <div className="px-4 flex flex-col items-center">
+                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
+                  <div className="w-px h-12 bg-gray-300"></div>
                 </div>
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/INTJ.png" alt="建築家（直観型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-bold text-lg">
                     N 直観
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">可能性やパターンに着目</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">可能性やパターンに着目</p>
                 </div>
               </div>
-              <p className="text-center text-gray-500 text-sm">情報の収集方法</p>
+              <p className="text-center text-gray-600 text-base font-medium">情報の収集方法</p>
             </div>
 
             {/* T/F */}
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/ENTJ.png" alt="指揮官（思考型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-lg font-bold text-lg">
                     T 思考
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">論理と客観性を重視</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">論理と客観性を重視</p>
                 </div>
-                <div className="px-4">
-                  <div className="w-px h-16 bg-gray-300"></div>
+                <div className="px-4 flex flex-col items-center">
+                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
+                  <div className="w-px h-12 bg-gray-300"></div>
                 </div>
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/INFJ.png" alt="提唱者（感情型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-lg font-bold text-lg">
                     F 感情
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">価値観と人間関係を重視</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">価値観と人間関係を重視</p>
                 </div>
               </div>
-              <p className="text-center text-gray-500 text-sm">判断の基準</p>
+              <p className="text-center text-gray-600 text-base font-medium">判断の基準</p>
             </div>
 
             {/* J/P */}
-            <div className="bg-white rounded-lg shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-6">
               <div className="flex items-center justify-between mb-4">
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/ESFJ.png" alt="領事（判断型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-orange-100 text-orange-700 px-6 py-3 rounded-lg font-bold text-lg">
                     J 判断
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">計画的に進める</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">計画的に進める</p>
                 </div>
-                <div className="px-4">
-                  <div className="w-px h-16 bg-gray-300"></div>
+                <div className="px-4 flex flex-col items-center">
+                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
+                  <div className="w-px h-12 bg-gray-300"></div>
                 </div>
-                <div className="flex-1 text-center">
+                <div className="flex-1 flex flex-col items-center text-center">
+                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                    <Image src="/img/character/ESTP.png" alt="起業家（知覚型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
+                  </div>
                   <div className="inline-block bg-orange-100 text-orange-700 px-6 py-3 rounded-lg font-bold text-lg">
                     P 知覚
                   </div>
-                  <p className="text-sm text-gray-600 mt-2">柔軟に対応する</p>
+                  <p className="text-lg text-gray-700 mt-3 font-medium">柔軟に対応する</p>
                 </div>
               </div>
-              <p className="text-center text-gray-500 text-sm">外界への接し方</p>
+              <p className="text-center text-gray-600 text-base font-medium">外界への接し方</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* 16タイプ一覧 Section */}
-      <section id="types" className="py-16 px-4 bg-white scroll-mt-20">
+      <section id="types" className="py-16 px-4 bg-white scroll-mt-36">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-10 text-center">
             16のタイプ
@@ -354,7 +408,7 @@ export default function Home() {
       <footer className="bg-gray-50 py-8 px-4 border-t border-gray-300">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-gray-700">運営: <a href="https://yumesuta.com" target="_blank" rel="noopener noreferrer" className="text-orange-600 hover:text-orange-500 hover:underline">株式会社ゆめスタ</a></p>
-          <p className="text-sm text-gray-600 mt-2">
+          <p className="text-lg text-gray-700 mt-3 font-medium">
             ※ このアプリは公式MBTI®の代替ではなく、MBTI理論を参考にした性格診断です
           </p>
         </div>

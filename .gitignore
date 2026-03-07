@@ -42,3 +42,9 @@ next-env.d.ts
 
 # 競合分析用の参考資料（著作権の問題があるためコミットしない）
 /contents/
+
+.vercel
+.env*.local
+
+# 旧キャラクター画像バックアップ
+public/img/backup/

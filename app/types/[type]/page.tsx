@@ -83,7 +83,7 @@ export default async function TypeDetailPage({ params }: PageProps) {
   }
 
   const typeInfo = getTypeDescription(typeCode);
-  const { colors } = getTypeColors(typeCode);
+  const { colors, hex } = getTypeColors(typeCode);
 
   // 構造化データ（JSON-LD）
   const jsonLd = {
@@ -121,13 +121,13 @@ export default async function TypeDetailPage({ params }: PageProps) {
       />
       <div className="min-h-screen bg-gray-50">
       {/* ヘッダーセクション */}
-      <section className={`${colors.primary} text-white pt-24 pb-16 px-4`}>
+      <section style={{ backgroundColor: hex }} className="text-white pt-36 pb-16 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="flex-1">
               <h1 className="text-5xl font-bold mb-2">{typeInfo.name}</h1>
-              <p className="text-2xl text-purple-200 mb-4">{typeCode}型の性格</p>
-              <p className="text-lg text-purple-100">{typeInfo.shortDescription}</p>
+              <p className="text-2xl text-white/80 mb-4">{typeCode}型の性格</p>
+              <p className="text-lg text-white/90">{typeInfo.shortDescription}</p>
             </div>
             <div className="relative w-64 h-64 flex-shrink-0">
               <Image
