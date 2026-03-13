@@ -1,270 +1,184 @@
 # MBTI診断アプリ 引き継ぎドキュメント
 
-**更新日**: 2025-10-25
-**プロジェクト**: MBTI性格診断Webアプリケーション
-**場所**: `C:/mbti-app/`
-**技術スタック**: Next.js 15, TypeScript, Tailwind CSS
+**最終更新**: 2026-03-13
+**URL**: https://mbti.yumesuta.com
+**リポジトリ**: `/mnt/c/mbti-app`
+**技術スタック**: Next.js 16.1.6 / React 19 / TypeScript / Tailwind 4
+**デプロイ**: Vercel（`npx vercel --prod`）
+**運営**: 株式会社ゆめスタ
 
 ---
 
-## 🎯 プロジェクト概要
+## プロジェクト概要
 
-科学的に正確なMBTI性格診断を提供するWebアプリケーション。4つの指標（E/I, S/N, T/F, J/P）の組み合わせで16種類の性格タイプを判定します。
-
-### デザイン方針
-- Progate風のクリーンなデザイン
-- グラデーション禁止（単色のみ）
-- 絵文字禁止
-- 完全レスポンシブ対応
+MBTI性格診断Webアプリ。30問の質問で16タイプを判定し、適職・キャリアパスを提示。
+診断結果からyumesuta.com（本体HP）のキャリア探索ガイドへ誘導する導線を持つ。
 
 ---
 
-## ✅ 完了済み機能
+## 現在の構成
 
-### 1. フロントエンド実装 ✅
-- **トップページ** (`app/page.tsx`)
-  - Hero Section
-  - MBTIとは説明
-  - 診断の特徴（4カード）
-  - 4つの要素説明（縦並びレイアウト）
-  - 16タイプ一覧
-  - CTAセクション（オレンジ色）
-  - フッター（gray-50背景）
+### ページ構造
+```
+/                           ← トップ（Hero + 説明 + 16タイプ一覧）
+/test                       ← 診断（30問、5段階評価）
+/result/basic               ← 結果（スコア + 適職 + キャリア探索セクション）
+/types/[type]               ← 16タイプ詳細ページ（SSG）
+/blog                       ← ブログ一覧
+/blog/[category]/[slug]     ← ブログ記事（80記事、7カテゴリ）
+```
 
-- **診断ページ** (`app/test/page.tsx`)
-  - 30問の基本質問
-  - プログレスバー
-  - 5段階評価
+### ブログカテゴリ（80記事）
+| カテゴリ | 内容 |
+|---------|------|
+| basics | MBTI基礎知識 |
+| career | 16タイプ別適職 |
+| corporate | 企業向け活用法 |
+| growth | 強みの活かし方 |
+| job-hunting | 自己分析・面接・企業選び |
+| relationships | 人間関係 |
+| trends | トレンド |
 
-- **結果ページ** (`app/result/page.tsx`)
-  - タイプ表示
-  - スコアバー
-  - 詳細説明
-
-- **タイプ詳細ページ** (`app/types/[type]/page.tsx`)
-  - 動的ルーティング
-  - 詳細セクション表示
-
-### 2. データ構造 ✅
-- **型定義** (`types/index.ts`)
-  - `MBTIType`, `Question`, `Answer`, `TypeDescription`
-  - `DetailedSection`, `Quote` 追加済み
-
-- **質問データ** (`lib/questions.ts`)
-  - 30問の基本質問（E/I: 8問, S/N: 8問, T/F: 7問, J/P: 7問）
-
-- **タイプ説明** (`lib/type-descriptions.ts`)
-  - **全16タイプ完成 ✅**
-  - 各タイプに `detailedSections` (4セクション) を実装済み
-  - `detailedDescription` は「〇〇タイプは」形式で統一
-  - ENFPは「運動家」（「広報運動家」ではない）
-
-- **判定ロジック** (`lib/mbti-calculator.ts`)
-  - スコア計算
-  - タイプ判定
-
-### 3. UI/UXコンポーネント ✅
-- カラーシステム (`lib/type-colors.ts`)
-  - NT系: 青 (Indigo)
-  - NF系: 緑 (Emerald)
-  - SJ系: 紫 (Purple)
-  - SP系: オレンジ (Orange)
-
-- 画像システム (`lib/type-images.ts`)
-  - 各タイプの画像パス定義
+### 主要ファイル
+| ファイル | 役割 |
+|---------|------|
+| `lib/type-descriptions.ts` | 全16タイプのデータ（careers配列が重要） |
+| `lib/type-colors.ts` | 4気質グループ別カラー |
+| `lib/type-images.ts` | タイプ別キャラクター画像パス |
+| `lib/career-industry-mapping.ts` | **適職→業界マッピング + available制御** |
+| `components/CareerExploreSection.tsx` | 結果・タイプページの「キャリア探索」セクション |
+| `components/CareerSidebar.tsx` | 右固定サイドバー + モバイル下部バー |
+| `components/CareerFloatingCTA.tsx` | デスクトップ固定CTA |
+| `components/Header.tsx` | 若者向け最適化済みナビ |
 
 ---
 
-## 📚 関連ドキュメント
+## career-guide 統合（2026-03-13 実装済み）
 
-- **HANDOFF-SEO-MVP.md**: SEO・LLMO最適化とMVPデプロイ準備の詳細ドキュメント
+### 仕組み
+
+`CareerExploreSection` は MBTI結果の適職タグ配列を受け取り、`getIndustryLinks()` で業界マッピングを実行。`available: true` の業界だけカード表示する。
+
+```
+MBTI結果「適職: エンジニア」
+  ↓ career-industry-mapping.ts
+  エンジニア → manufacturing (available: true) → カード表示
+  ↓
+  業界カードをクリック → yumesuta.com/career-guide/industries/manufacturing
+```
+
+### 現在の available 状態
+
+| 業界 | スラッグ | available | yumesutaHP側の状態 |
+|------|---------|-----------|------------------|
+| 製造業 | manufacturing | **true** | 公開済み |
+| 建設業 | construction | **true** | 公開済み |
+| IT・情報 | it | false | 未作成 |
+| 医療・福祉 | medical | false | 未作成 |
+| 美容・クリエイティブ | beauty | false | 未作成 |
+| サービス・小売 | retail | false | 未作成 |
+
+### 空振り状況（16タイプ中9タイプが業界カード0枚）
+
+ENTP, INFJ, INFP, ENFJ, ENFP, ISFJ, ESFJ, ISFP, ESTP, ESFP
+
+詳細マッピング: yumesutaHP側の `docs/PLAN-MBTI-career-content-needs.md` に全16タイプ×業界×職種の網羅テーブルあり。
 
 ---
 
-## 🔥 次にやること（最優先）
+## yumesutaHP側コンテンツ完成時にやること
 
-### フェーズ1: SEO・LLMO最適化とMVPデプロイ準備
+### 業界ガイドが完成した場合
 
-**詳細は `HANDOFF-SEO-MVP.md` を参照してください。**
+**対象ファイル**: `lib/career-industry-mapping.ts`
 
-主なタスク：
-1. 徹底的なSEO対策の実装
-2. LLMO（Language Model Optimization）の導入
-3. 未実装機能のリンク・導線をコメントアウト
-4. MVPとしてデプロイ
+1. 該当業界の `available: false` → `true` に変更
+2. `image` に yumesuta.com の画像URLを設定:
+   ```typescript
+   it: {
+     slug: 'it',
+     label: 'IT・情報',
+     image: 'https://yumesuta.com/img/career-guide/it.png',  // ← 画像URL
+     href: 'https://yumesuta.com/career-guide/industries/it',
+     available: true,  // ← これを true に
+   },
+   ```
+3. デプロイ: `npx vercel --prod`
 
-### フェーズ2: データ保存機能の実装
+### 職種ガイドが完成した場合
 
-**目的**: ユーザーの診断結果をGoogleスプレッドシートに保存
-
-#### 実装タスク
-
-1. **Google Sheets API設定**
-   - Google Cloud Platformでプロジェクト作成
-   - Google Sheets APIを有効化
-   - サービスアカウント作成
-   - 認証情報（JSONキー）をダウンロード
-   - `.env.local`に環境変数設定
-
-2. **バックエンドAPI作成**
-   - `app/api/save-result/route.ts` を作成
-   - Google Sheets APIライブラリをインストール: `npm install googleapis`
-   - 保存するデータ:
-     - タイムスタンプ
-     - メールアドレス（任意）
-     - MBTIタイプ
-     - 各次元のスコア (E, I, S, N, T, F, J, P)
-     - 回答データ（JSON形式）
-
-3. **フロントエンド統合**
-   - 結果ページに「結果を保存」ボタン追加
-   - メールアドレス入力フォーム（任意）
-   - 保存成功/失敗のフィードバック
-
-#### 参考実装例
+**対象ファイル**: `lib/career-industry-mapping.ts` に `careerToJob` マッピングを追加
 
 ```typescript
-// app/api/save-result/route.ts
-import { NextResponse } from 'next/server';
-import { google } from 'googleapis';
+// 追加するマッピング
+const careerToJob: Record<string, string> = {
+  エンジニア: 'engineer',
+  営業: 'sales',
+  デザイナー: 'designer',
+  // ...
+}
 
-export async function POST(request: Request) {
-  try {
-    const { email, mbtiType, scores, answers } = await request.json();
-
-    // Google Sheets認証
-    const auth = new google.auth.GoogleAuth({
-      credentials: JSON.parse(process.env.GOOGLE_CREDENTIALS || '{}'),
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    });
-
-    const sheets = google.sheets({ version: 'v4', auth });
-
-    // データを追加
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.SHEET_ID,
-      range: 'Sheet1!A:Z',
-      valueInputOption: 'USER_ENTERED',
-      requestBody: {
-        values: [[
-          new Date().toISOString(),
-          email || '',
-          mbtiType,
-          scores.E,
-          scores.I,
-          scores.S,
-          scores.N,
-          scores.T,
-          scores.F,
-          scores.J,
-          scores.P,
-          JSON.stringify(answers),
-        ]],
-      },
-    });
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to save' }, { status: 500 });
-  }
+export function getJobLink(career: string): string | null {
+  const slug = careerToJob[career]
+  return slug ? `https://yumesuta.com/career-guide/jobs/${slug}` : null
 }
 ```
 
----
+**対象ファイル**: 結果ページ + タイプページの適職タグをリンク化
+- `app/result/basic/page.tsx` の適職 `<span>` → `<a>` に変更
+- `app/types/[type]/page.tsx` も同様
+- または `CareerExploreSection` 内で職種リンクセクションを追加
 
-## 📁 プロジェクト構成
+### 両方のチェックリスト
 
-```
-mbti-app/
-├── app/
-│   ├── page.tsx              # トップページ
-│   ├── test/page.tsx         # 診断ページ
-│   ├── result/page.tsx       # 結果ページ
-│   ├── types/[type]/page.tsx # タイプ詳細ページ
-│   └── api/                  # （未実装）
-│       └── save-result/route.ts
-├── lib/
-│   ├── questions.ts          # 質問データ
-│   ├── type-descriptions.ts  # 全16タイプ説明（完成）
-│   ├── mbti-calculator.ts    # 判定ロジック
-│   ├── type-colors.ts        # カラー定義
-│   └── type-images.ts        # 画像パス
-├── types/
-│   └── index.ts              # TypeScript型定義
-└── public/
-    └── images/types/         # タイプ画像（16枚）
-```
+- [ ] `lib/career-industry-mapping.ts` の available/image 更新
+- [ ] 適職タグのリンク化（職種ガイド完成後）
+- [ ] `npx vercel --prod` でデプロイ
+- [ ] 全16タイプで業界カードが正しく表示されるか確認
+- [ ] リンク先が yumesuta.com の正しいページを開くか確認
 
 ---
 
-## 🎨 デザインガイドライン
+## ヘッダー構成
 
-### カラーパレット
+### メインナビ（若者向け最適化済み、中央揃え）
+| 項目 | リンク先 | 種別 |
+|------|---------|------|
+| MBTI診断 | `/` | 内部（オレンジハイライト） |
+| キャリア探索 | yumesuta.com/career-guide | 外部 |
+| ゆめマガ | yumesuta.com/yumemaga | 外部 |
+| STAR紹介 | yumesuta.com/stars | 外部 |
 
-**タイプグループ別:**
-- NT系（分析家）: Indigo (`bg-indigo-500`, `text-indigo-600`)
-- NF系（外交官）: Emerald (`bg-emerald-500`, `text-emerald-600`)
-- SJ系（番人）: Purple (`bg-purple-500`, `text-purple-600`)
-- SP系（探検家）: Orange (`bg-orange-500`, `text-orange-600`)
-
-**共通カラー:**
-- メイン背景: `bg-gray-50`
-- カード背景: `bg-white`
-- テキスト: `text-gray-900`, `text-gray-700`
-- CTAボタン: `bg-orange-400`（優しいオレンジ）
-
-### 重要なUI原則
-- 絵文字は使用しない
-- グラデーションは使用しない
-- 単色のみ使用
-- 大きめのボタン
-- 明確な階層構造
+### MBTIサブナビ
+MBTIとは / 診断の特徴 / タイプ一覧 / 記事 / 診断する
 
 ---
 
-## ⚠️ 注意事項
+## デザインルール
 
-1. **MBTI理論の正確性**
-   - 憶測や予測での質問・判定は禁止
-   - 科学的根拠に基づいた情報のみ使用
-
-2. **文体の統一**
-   - `detailedDescription`: 「〇〇タイプは」形式（客観的）
-   - `communicationStyle`, `careerPath`, `selfGrowth`: 「あなたは」形式（診断結果用）
-
-3. **環境変数**
-   - `.env.local`を作成して以下を設定:
-     ```
-     GOOGLE_CREDENTIALS={"type":"service_account",...}
-     SHEET_ID=your-spreadsheet-id
-     ```
+- 絵文字禁止
+- グラデーション禁止（CTAボタンのエメラルドグラデーションは例外）
+- 単色ベース
+- タイプ別カラー: `lib/type-colors.ts` の `typeHexColors` 参照
+- 4気質グループ: NT=紫, NF=緑, SJ=青, SP=オレンジ
 
 ---
 
-## 🚀 開発開始手順
+## 開発コマンド
 
 ```bash
-# 依存関係インストール
-npm install
-
-# Google Sheets API用ライブラリ追加
-npm install googleapis
-
-# 開発サーバー起動
-npm run dev
+npm run dev          # 開発サーバー
+npm run build        # 本番ビルド
+npx tsc --noEmit     # 型チェック（ビルドなし）
+npx vercel --prod    # 本番デプロイ
 ```
 
 ---
 
-## 📝 今後の拡張案
+## 関連プロジェクト
 
-- 詳細診断（追加20-30問）
-- 相性診断機能
-- タイプ別キャリアガイド
-- ユーザー認証
-- 診断履歴管理
-- SNSシェア機能
-
----
-
-**次のセッションでは、Google Sheets APIを使ったデータ保存機能の実装から始めてください。**
+| プロジェクト | 場所 | 関係 |
+|-------------|------|------|
+| yumesutaHP | `/mnt/c/yumesutahp` | 本体HP。career-guideのコンテンツはここで制作 |
+| yumesutaHP HANDOFF | `docs/HANDOFF.md` Cシリーズ | career-guide全体の計画・進捗管理 |
+| コンテンツ需要リスト | `docs/PLAN-MBTI-career-content-needs.md` | 全16タイプ×業界×職種のカバー率・優先度 |
