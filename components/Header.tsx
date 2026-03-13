@@ -16,6 +16,7 @@ const mainNavigation = [
   { name: 'パートナー紹介', href: `${MAIN_URL}/partners` },
   { name: '企業概要', href: `${MAIN_URL}/company` },
   { name: 'MBTI診断', href: '/' },
+  { name: 'キャリア探索', href: `${MAIN_URL}/career-guide` },
   { name: '高卒採用ガイド', href: `${MAIN_URL}/kosotsusaiyo` },
 ];
 

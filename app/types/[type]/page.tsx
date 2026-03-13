@@ -6,6 +6,7 @@ import { getTypeDescription, getAllTypeDescriptions } from '@/lib/type-descripti
 import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { MBTIType } from '@/types';
+import CareerExploreSection from '@/components/CareerExploreSection';
 
 interface PageProps {
   params: Promise<{
@@ -234,6 +235,11 @@ export default async function TypeDetailPage({ params }: PageProps) {
           </div>
         </div>
 
+        {/* キャリア探索 */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <CareerExploreSection careers={typeInfo.careers} />
+        </div>
+
         {/* 相性の良いタイプ */}
         <div className="bg-white rounded-lg shadow-md p-8 mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">相性の良いタイプ</h3>
@@ -270,11 +276,19 @@ export default async function TypeDetailPage({ params }: PageProps) {
           </Link>
         </div>
 
-        {/* 診断を受けるボタン */}
-        <div className="text-center">
+        {/* フッターボタン */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href="https://yumesuta.com/career-guide"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold transition-all"
+          >
+            キャリア探索を始める
+          </a>
           <Link
             href="/"
-            className="inline-block text-gray-600 hover:text-gray-900 transition-all"
+            className="inline-block text-gray-600 hover:text-gray-900 transition-all px-6 py-3"
           >
             トップページに戻る
           </Link>

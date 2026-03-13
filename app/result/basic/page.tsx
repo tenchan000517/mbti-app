@@ -10,6 +10,7 @@ import { getTypeDescription } from '@/lib/type-descriptions';
 import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
+import CareerExploreSection from '@/components/CareerExploreSection';
 
 export default function BasicResultPage() {
   const router = useRouter();
@@ -185,6 +186,9 @@ export default function BasicResultPage() {
             </div>
           </div>
 
+          {/* キャリア探索 */}
+          <CareerExploreSection careers={typeInfo.careers} />
+
           {/* キャリアパス */}
           <div className="border-t border-gray-200 pt-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">あなたのキャリアパス</h2>
@@ -277,10 +281,18 @@ export default function BasicResultPage() {
           </div>
           */}
 
-          <div className="text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <a
+              href="https://yumesuta.com/career-guide"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-3 rounded-lg font-semibold transition-all"
+            >
+              キャリア探索を始める
+            </a>
             <button
               onClick={() => router.push('/')}
-              className="text-gray-600 hover:text-gray-900 transition-all"
+              className="text-gray-600 hover:text-gray-900 transition-all px-6 py-3"
             >
               トップページに戻る
             </button>
