@@ -7,9 +7,10 @@ import { useState } from 'react';
 const MAIN_URL = 'https://yumesuta.com';
 
 const mainNavigation = [
-  { name: 'キャリア探索', href: `${MAIN_URL}/career-guide` },
-  { name: 'ゆめマガ', href: `${MAIN_URL}/yumemaga` },
-  { name: 'STAR紹介', href: `${MAIN_URL}/stars` },
+  { name: 'MBTI診断', href: '/', internal: true },
+  { name: 'キャリア探索', href: `${MAIN_URL}/career-guide`, internal: false },
+  { name: 'ゆめマガ', href: `${MAIN_URL}/yumemaga`, internal: false },
+  { name: 'STAR紹介', href: `${MAIN_URL}/stars`, internal: false },
 ];
 
 const mbtiNavigation = [
@@ -29,7 +30,7 @@ export function Header() {
       {/* メインヘッダー（yumesutaHPと統一） */}
       <header className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
+          <div className="flex items-center h-20">
             {/* Logo */}
             <div className="flex-shrink-0">
               <a href={MAIN_URL} className="flex items-center">
@@ -43,17 +44,27 @@ export function Header() {
               </a>
             </div>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-6">
-              {mainNavigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-700 hover:text-orange-600 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap"
-                >
-                  {item.name}
-                </a>
-              ))}
+            {/* Desktop Navigation — centered */}
+            <nav className="hidden lg:flex items-center justify-center space-x-6 flex-1">
+              {mainNavigation.map((item) =>
+                item.internal ? (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-orange-600 font-semibold px-2 py-2 rounded-md text-sm transition-colors duration-200 whitespace-nowrap"
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-gray-700 hover:text-orange-600 px-2 py-2 rounded-md text-sm font-medium transition-colors duration-200 whitespace-nowrap"
+                  >
+                    {item.name}
+                  </a>
+                )
+              )}
             </nav>
 
             {/* Mobile menu button */}
@@ -78,16 +89,27 @@ export function Header() {
           {mainMenuOpen && (
             <div className="lg:hidden">
               <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-                {mainNavigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="text-gray-700 hover:text-orange-600 block px-3 py-2 rounded-md text-base font-medium"
-                    onClick={() => setMainMenuOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {mainNavigation.map((item) =>
+                  item.internal ? (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="text-orange-600 font-semibold block px-3 py-2 rounded-md text-base"
+                      onClick={() => setMainMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className="text-gray-700 hover:text-orange-600 block px-3 py-2 rounded-md text-base font-medium"
+                      onClick={() => setMainMenuOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  )
+                )}
               </div>
             </div>
           )}
