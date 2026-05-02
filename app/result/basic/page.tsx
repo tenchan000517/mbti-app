@@ -14,6 +14,12 @@ import CareerExploreSection from '@/components/CareerExploreSection';
 import { getIndustryLinks } from '@/lib/career-industry-mapping';
 import { GraduationCap, Rocket } from 'lucide-react';
 
+declare global {
+  interface Window {
+    gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
+  }
+}
+
 export default function BasicResultPage() {
   const router = useRouter();
   const [mbtiType, setMbtiType] = useState<MBTIType | null>(null);
@@ -230,9 +236,23 @@ export default function BasicResultPage() {
                     </div>
                   </div>
                 )}
-                {/* LINE 公式バナー (URL 未確定 = 非表示) */}
-                <div className="hidden mt-3" data-banner="line-youth">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
+                {/* LINE 公式バナー (= 漆畑さん 00:24Z literal 承認・1 アカウント運用 https://lin.ee/SIdAyY4) */}
+                <div className="mt-3" data-banner="line-youth">
+                  <a
+                    href="https://lin.ee/SIdAyY4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                        window.gtag('event', 'line_cta_click', {
+                          event_category: 'LINE CTA',
+                          line_segment: 'high_school',
+                          mbti_type: mbtiType,
+                        })
+                      }
+                    }}
+                    className="block bg-white hover:bg-emerald-100 rounded-xl px-4 py-3 shadow-sm hover:shadow transition-all"
+                  >
                     <p className="font-bold text-emerald-700">▶ LINE 公式 (高校生・大学生用)</p>
                   </a>
                 </div>
@@ -259,9 +279,23 @@ export default function BasicResultPage() {
                     <p className="font-bold text-amber-700">▶ メルマガ (個人事業主用)</p>
                   </a>
                 </div>
-                {/* LINE 公式バナー (URL 未確定 = 非表示) */}
-                <div className="hidden mt-3" data-banner="line-fc">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
+                {/* LINE 公式バナー (= 漆畑さん 00:24Z literal 承認・1 アカウント運用 https://lin.ee/SIdAyY4) */}
+                <div className="mt-3" data-banner="line-fc">
+                  <a
+                    href="https://lin.ee/SIdAyY4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                        window.gtag('event', 'line_cta_click', {
+                          event_category: 'LINE CTA',
+                          line_segment: 'fc_candidate',
+                          mbti_type: mbtiType,
+                        })
+                      }
+                    }}
+                    className="block bg-white hover:bg-amber-100 rounded-xl px-4 py-3 shadow-sm hover:shadow transition-all"
+                  >
                     <p className="font-bold text-amber-700">▶ LINE 公式 (個人事業主用)</p>
                   </a>
                 </div>
