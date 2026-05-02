@@ -11,8 +11,13 @@ import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 import CareerExploreSection from '@/components/CareerExploreSection';
-import { getIndustryLinks } from '@/lib/career-industry-mapping';
 import { GraduationCap, Rocket } from 'lucide-react';
+
+declare global {
+  interface Window {
+    gtag?: (command: string, eventName: string, params?: Record<string, unknown>) => void;
+  }
+}
 
 export default function BasicResultPage() {
   const router = useRouter();
@@ -212,28 +217,24 @@ export default function BasicResultPage() {
                   ▶ キャリア探索ガイド
                 </a>
                 <p className="text-sm text-gray-600 mt-3 leading-relaxed text-center">業界・職種・自己分析が一気に見える</p>
-                {getIndustryLinks(typeInfo.careers).length > 0 && (
-                  <div className="mt-5">
-                    <p className="text-sm font-semibold text-emerald-700 mb-2">あなたに向いている業界</p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {getIndustryLinks(typeInfo.careers).map((industry) => (
-                        <a
-                          key={industry.slug}
-                          href={`${industry.href}?utm_source=mbti&mbti_type=${mbtiType}&segment=high_school&career_tag=${encodeURIComponent(industry.matchedCareers[0] || '')}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block bg-white hover:bg-emerald-100 rounded-lg px-3 py-2 text-sm font-medium text-emerald-700 shadow-sm hover:shadow transition-all"
-                        >
-                          ▶ {industry.label}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {/* LINE 公式バナー (URL 未確定 = 非表示) */}
-                <div className="hidden mt-3" data-banner="line-youth">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
-                    <p className="font-bold text-emerald-700">▶ LINE 公式 (高校生・大学生用)</p>
+                {/* LINE 公式バナー (= 漆畑さん 01:09Z literal シンプル統一・両カラム同表記・LINE 緑色 #06C755) */}
+                <div className="mt-3" data-banner="line-youth">
+                  <a
+                    href="https://lin.ee/SIdAyY4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                        window.gtag('event', 'line_cta_click', {
+                          event_category: 'LINE CTA',
+                          line_segment: 'high_school',
+                          mbti_type: mbtiType,
+                        })
+                      }
+                    }}
+                    className="block bg-[#06C755] hover:bg-[#05B048] rounded-xl px-4 py-3 shadow-md hover:shadow-lg transition-all"
+                  >
+                    <p className="font-bold text-white text-center text-base">💬 LINEで友だち追加</p>
                   </a>
                 </div>
               </div>
@@ -259,10 +260,24 @@ export default function BasicResultPage() {
                     <p className="font-bold text-amber-700">▶ メルマガ (個人事業主用)</p>
                   </a>
                 </div>
-                {/* LINE 公式バナー (URL 未確定 = 非表示) */}
-                <div className="hidden mt-3" data-banner="line-fc">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
-                    <p className="font-bold text-amber-700">▶ LINE 公式 (個人事業主用)</p>
+                {/* LINE 公式バナー (= 漆畑さん 01:09Z literal シンプル統一・両カラム同表記・LINE 緑色 #06C755) */}
+                <div className="mt-3" data-banner="line-fc">
+                  <a
+                    href="https://lin.ee/SIdAyY4"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                        window.gtag('event', 'line_cta_click', {
+                          event_category: 'LINE CTA',
+                          line_segment: 'fc_candidate',
+                          mbti_type: mbtiType,
+                        })
+                      }
+                    }}
+                    className="block bg-[#06C755] hover:bg-[#05B048] rounded-xl px-4 py-3 shadow-md hover:shadow-lg transition-all"
+                  >
+                    <p className="font-bold text-white text-center text-base">💬 LINEで友だち追加</p>
                   </a>
                 </div>
               </div>
