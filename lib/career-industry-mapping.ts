@@ -32,28 +32,28 @@ const industries: Record<string, IndustryMeta> = {
     label: 'IT・情報',
     image: '',
     href: 'https://yumesuta.com/career-guide/industries/it',
-    available: false,
+    available: true,
   },
   retail: {
     slug: 'retail',
     label: 'サービス・小売',
     image: '',
     href: 'https://yumesuta.com/career-guide/industries/retail',
-    available: false,
+    available: true,
   },
   medical: {
     slug: 'medical',
     label: '医療・福祉',
     image: '',
     href: 'https://yumesuta.com/career-guide/industries/medical',
-    available: false,
+    available: true,
   },
   beauty: {
     slug: 'beauty',
     label: '美容・クリエイティブ',
     image: '',
     href: 'https://yumesuta.com/career-guide/industries/beauty',
-    available: false,
+    available: true,
   },
 }
 

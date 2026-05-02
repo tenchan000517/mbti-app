@@ -12,6 +12,7 @@ import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 import CareerExploreSection from '@/components/CareerExploreSection';
 import { getIndustryLinks } from '@/lib/career-industry-mapping';
+import { GraduationCap, Rocket } from 'lucide-react';
 
 export default function BasicResultPage() {
   const router = useRouter();
@@ -190,27 +191,30 @@ export default function BasicResultPage() {
           {/* キャリア探索 */}
           <CareerExploreSection careers={typeInfo.careers} />
 
-          {/* MBTI 結果 → ゆめスタ送客導線 (= 2 カラム CTA・既存維持・追加のみ) */}
-          <div className="border-t border-gray-200 pt-6 mb-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">この結果を、次の一歩へ</h2>
-            <p className="text-gray-600 mb-6">あなたに合った道で、可能性を試してみよう</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* MBTI 結果 → ゆめスタ送客導線 (= 2 カラム CTA・既存維持・追加のみ・漆畑さん 17:01Z 強化反映・no-borders 遵守) */}
+          <div className="mt-12 mb-6">
+            <h2 className="text-3xl font-bold text-gray-900 mb-3 text-center">この結果を、次の一歩へ</h2>
+            <p className="text-gray-600 mb-8 text-center text-base">あなたに合った道で、可能性を試してみよう</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* 左カラム: 高校生・大学生向け */}
-              <div className="bg-emerald-50 rounded-2xl p-6">
-                <p className="text-xs font-semibold text-emerald-700 mb-1">高校生・大学生</p>
-                <h3 className="text-lg font-bold text-gray-900 mb-4">自分の進路を探すなら</h3>
+              <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-2xl p-6 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <GraduationCap className="w-6 h-6 text-emerald-600" />
+                  <p className="text-sm font-semibold text-emerald-700">高校生・大学生</p>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-5">自分の進路を探すなら</h3>
                 <a
                   href={`https://yumesuta.com/career-guide?utm_source=mbti&mbti_type=${mbtiType}&segment=high_school`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-white hover:bg-emerald-100 rounded-xl px-4 py-3 mb-3 transition-all"
+                  className="block bg-emerald-500 hover:bg-emerald-600 text-white text-lg font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg text-center transition-all"
                 >
-                  <p className="font-bold text-emerald-700">▶ キャリア探索ガイド</p>
-                  <p className="text-xs text-gray-600 mt-0.5">業界・職種・自己分析が一気に見える</p>
+                  ▶ キャリア探索ガイド
                 </a>
+                <p className="text-sm text-gray-600 mt-3 leading-relaxed text-center">業界・職種・自己分析が一気に見える</p>
                 {getIndustryLinks(typeInfo.careers).length > 0 && (
-                  <div className="mt-4">
-                    <p className="text-xs font-semibold text-emerald-700 mb-2">あなたに向いている業界</p>
+                  <div className="mt-5">
+                    <p className="text-sm font-semibold text-emerald-700 mb-2">あなたに向いている業界</p>
                     <div className="grid grid-cols-2 gap-2">
                       {getIndustryLinks(typeInfo.careers).map((industry) => (
                         <a
@@ -218,7 +222,7 @@ export default function BasicResultPage() {
                           href={`${industry.href}?utm_source=mbti&mbti_type=${mbtiType}&segment=high_school&career_tag=${encodeURIComponent(industry.matchedCareers[0] || '')}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block bg-white hover:bg-emerald-100 rounded-lg px-3 py-2 text-xs font-medium text-emerald-700 transition-all"
+                          className="block bg-white hover:bg-emerald-100 rounded-lg px-3 py-2 text-sm font-medium text-emerald-700 shadow-sm hover:shadow transition-all"
                         >
                           ▶ {industry.label}
                         </a>
@@ -234,18 +238,21 @@ export default function BasicResultPage() {
                 </div>
               </div>
               {/* 右カラム: 個人事業主向け */}
-              <div className="bg-amber-50 rounded-2xl p-6">
-                <p className="text-xs font-semibold text-amber-700 mb-1">個人事業主・FC 候補者</p>
-                <h3 className="text-lg font-bold text-gray-900 mb-4">自分の可能性にトライするなら</h3>
+              <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-6 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-200">
+                <div className="flex items-center gap-2 mb-2">
+                  <Rocket className="w-6 h-6 text-amber-600" />
+                  <p className="text-sm font-semibold text-amber-700">個人事業主・FC 候補者</p>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-5">自分の可能性にトライするなら</h3>
                 <a
                   href={`https://yumesuta.com/recruit?utm_source=mbti&mbti_type=${mbtiType}&segment=fc_candidate`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block bg-white hover:bg-amber-100 rounded-xl px-4 py-3 mb-3 transition-all"
+                  className="block bg-amber-500 hover:bg-amber-600 text-white text-lg font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg text-center transition-all"
                 >
-                  <p className="font-bold text-amber-700">▶ ゆめスタパートナー募集</p>
-                  <p className="text-xs text-gray-600 mt-0.5">業務委託からはじめる起業</p>
+                  ▶ ゆめスタパートナー募集
                 </a>
+                <p className="text-sm text-gray-600 mt-3 leading-relaxed text-center">業務委託からはじめる起業</p>
                 {/* メルマガバナー (URL 未確定 = 非表示) */}
                 <div className="hidden mt-3" data-banner="mailmag-fc">
                   <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
