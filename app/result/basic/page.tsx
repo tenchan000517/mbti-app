@@ -11,6 +11,7 @@ import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 import CareerExploreSection from '@/components/CareerExploreSection';
+import { getIndustryLinks } from '@/lib/career-industry-mapping';
 
 export default function BasicResultPage() {
   const router = useRouter();
@@ -188,6 +189,78 @@ export default function BasicResultPage() {
 
           {/* キャリア探索 */}
           <CareerExploreSection careers={typeInfo.careers} />
+
+          {/* MBTI 結果 → ゆめスタ送客導線 (= 2 カラム CTA・既存維持・追加のみ) */}
+          <div className="border-t border-gray-200 pt-6 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">この結果を、次の一歩へ</h2>
+            <p className="text-gray-600 mb-6">あなたに合った道で、可能性を試してみよう</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* 左カラム: 高校生・大学生向け */}
+              <div className="bg-emerald-50 rounded-2xl p-6">
+                <p className="text-xs font-semibold text-emerald-700 mb-1">高校生・大学生</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">自分の進路を探すなら</h3>
+                <a
+                  href={`https://yumesuta.com/career-guide?utm_source=mbti&mbti_type=${mbtiType}&segment=high_school`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-white hover:bg-emerald-100 rounded-xl px-4 py-3 mb-3 transition-all"
+                >
+                  <p className="font-bold text-emerald-700">▶ キャリア探索ガイド</p>
+                  <p className="text-xs text-gray-600 mt-0.5">業界・職種・自己分析が一気に見える</p>
+                </a>
+                {getIndustryLinks(typeInfo.careers).length > 0 && (
+                  <div className="mt-4">
+                    <p className="text-xs font-semibold text-emerald-700 mb-2">あなたに向いている業界</p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {getIndustryLinks(typeInfo.careers).map((industry) => (
+                        <a
+                          key={industry.slug}
+                          href={`${industry.href}?utm_source=mbti&mbti_type=${mbtiType}&segment=high_school&career_tag=${encodeURIComponent(industry.matchedCareers[0] || '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block bg-white hover:bg-emerald-100 rounded-lg px-3 py-2 text-xs font-medium text-emerald-700 transition-all"
+                        >
+                          ▶ {industry.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {/* LINE 公式バナー (URL 未確定 = 非表示) */}
+                <div className="hidden mt-3" data-banner="line-youth">
+                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
+                    <p className="font-bold text-emerald-700">▶ LINE 公式 (高校生・大学生用)</p>
+                  </a>
+                </div>
+              </div>
+              {/* 右カラム: 個人事業主向け */}
+              <div className="bg-amber-50 rounded-2xl p-6">
+                <p className="text-xs font-semibold text-amber-700 mb-1">個人事業主・FC 候補者</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-4">自分の可能性にトライするなら</h3>
+                <a
+                  href={`https://yumesuta.com/recruit?utm_source=mbti&mbti_type=${mbtiType}&segment=fc_candidate`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block bg-white hover:bg-amber-100 rounded-xl px-4 py-3 mb-3 transition-all"
+                >
+                  <p className="font-bold text-amber-700">▶ ゆめスタパートナー募集</p>
+                  <p className="text-xs text-gray-600 mt-0.5">業務委託からはじめる起業</p>
+                </a>
+                {/* メルマガバナー (URL 未確定 = 非表示) */}
+                <div className="hidden mt-3" data-banner="mailmag-fc">
+                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
+                    <p className="font-bold text-amber-700">▶ メルマガ (個人事業主用)</p>
+                  </a>
+                </div>
+                {/* LINE 公式バナー (URL 未確定 = 非表示) */}
+                <div className="hidden mt-3" data-banner="line-fc">
+                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
+                    <p className="font-bold text-amber-700">▶ LINE 公式 (個人事業主用)</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
           {/* キャリアパス */}
           <div className="border-t border-gray-200 pt-6 mb-6">
