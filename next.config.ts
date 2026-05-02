@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'yumesuta.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'assets.yumesuta.com',
+      },
     ],
   },
 };
