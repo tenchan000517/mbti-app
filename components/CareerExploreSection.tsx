@@ -58,7 +58,7 @@ export default function CareerExploreSection({ careers }: CareerExploreSectionPr
           href={`${CAREER_GUIDE_HUB}#step-know-world`}
           target="_blank"
           rel="noopener noreferrer"
-          className="group bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 hover:border-emerald-400 flex flex-col items-center justify-center p-6 transition-all duration-200 min-h-[180px]"
+          className="group bg-gray-50 hover:bg-gray-100 rounded-2xl shadow-sm hover:shadow-md flex flex-col items-center justify-center p-6 transition-all duration-200 min-h-[180px]"
         >
           <Factory className="w-8 h-8 text-gray-400 group-hover:text-emerald-500 mb-2 transition-colors" />
           <span className="text-sm font-bold text-gray-500 group-hover:text-emerald-600 transition-colors">
