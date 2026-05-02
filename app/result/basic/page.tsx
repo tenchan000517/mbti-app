@@ -11,7 +11,7 @@ import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 import CareerExploreSection from '@/components/CareerExploreSection';
-import { GraduationCap, Rocket } from 'lucide-react';
+import { GraduationCap, Rocket, Mail, MessageCircle, Check } from 'lucide-react';
 
 declare global {
   interface Window {
@@ -143,7 +143,7 @@ export default function BasicResultPage() {
             <ul className="grid grid-cols-2 gap-2">
               {typeInfo.characteristics.map((char, index) => (
                 <li key={index} className="flex items-center text-gray-700">
-                  <span className="text-blue-500 mr-2">✓</span>
+                  <Check className="text-blue-500 mr-2 w-4 h-4 flex-shrink-0" />
                   {char}
                 </li>
               ))}
@@ -234,7 +234,10 @@ export default function BasicResultPage() {
                     }}
                     className="block bg-[#06C755] hover:bg-[#05B048] rounded-xl px-4 py-3 shadow-md hover:shadow-lg transition-all"
                   >
-                    <p className="font-bold text-white text-center text-base">💬 LINEで友だち追加</p>
+                    <p className="font-bold text-white text-base flex items-center justify-center gap-2">
+                      <MessageCircle className="w-5 h-5" />
+                      LINEで友だち追加
+                    </p>
                   </a>
                 </div>
               </div>
@@ -271,7 +274,10 @@ export default function BasicResultPage() {
                     }}
                     className="block bg-amber-600 hover:bg-amber-700 rounded-xl px-4 py-3 shadow-md hover:shadow-lg transition-all"
                   >
-                    <p className="font-bold text-white text-center text-base">📧 起業・挑戦のヒントを受け取る</p>
+                    <p className="font-bold text-white text-base flex items-center justify-center gap-2">
+                      <Mail className="w-5 h-5" />
+                      起業・挑戦のヒントを受け取る
+                    </p>
                   </a>
                 </div>
                 {/* LINE 公式バナー (= 漆畑さん 01:09Z literal シンプル統一・両カラム同表記・LINE 緑色 #06C755) */}
@@ -291,7 +297,10 @@ export default function BasicResultPage() {
                     }}
                     className="block bg-[#06C755] hover:bg-[#05B048] rounded-xl px-4 py-3 shadow-md hover:shadow-lg transition-all"
                   >
-                    <p className="font-bold text-white text-center text-base">💬 LINEで友だち追加</p>
+                    <p className="font-bold text-white text-base flex items-center justify-center gap-2">
+                      <MessageCircle className="w-5 h-5" />
+                      LINEで友だち追加
+                    </p>
                   </a>
                 </div>
               </div>
