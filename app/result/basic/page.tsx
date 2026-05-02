@@ -238,26 +238,40 @@ export default function BasicResultPage() {
                   </a>
                 </div>
               </div>
-              {/* 右カラム: 個人事業主向け */}
+              {/* 右カラム: 自分の可能性に挑戦したい (= 漆畑さん 01:29Z literal 文言案 A) */}
               <div className="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-6 shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-200">
                 <div className="flex items-center gap-2 mb-2">
                   <Rocket className="w-6 h-6 text-amber-600" />
-                  <p className="text-sm font-semibold text-amber-700">個人事業主・FC 候補者</p>
+                  <p className="text-sm font-semibold text-amber-700">起業や新しい働き方を考えるあなたへ</p>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-5">自分の可能性にトライするなら</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-5">自分の可能性に挑戦したい</h3>
                 <a
                   href={`https://yumesuta.com/recruit?utm_source=mbti&mbti_type=${mbtiType}&segment=fc_candidate`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block bg-amber-500 hover:bg-amber-600 text-white text-lg font-bold py-4 px-6 rounded-xl shadow-md hover:shadow-lg text-center transition-all"
                 >
-                  ▶ ゆめスタパートナー募集
+                  ▶ ゆめスタで挑戦をはじめる
                 </a>
-                <p className="text-sm text-gray-600 mt-3 leading-relaxed text-center">業務委託からはじめる起業</p>
-                {/* メルマガバナー (URL 未確定 = 非表示) */}
-                <div className="hidden mt-3" data-banner="mailmag-fc">
-                  <a href="" target="_blank" rel="noopener noreferrer" className="block bg-white rounded-xl px-4 py-3">
-                    <p className="font-bold text-amber-700">▶ メルマガ (個人事業主用)</p>
+                <p className="text-sm text-gray-600 mt-3 leading-relaxed text-center">あなたの可能性を試す一歩を</p>
+                {/* メルマガバナー (= 漆畑さん 01:29Z literal 有効化・自社ドメイン /mailmagazine 経由・PR #4 main merge と統合) */}
+                <div className="mt-3" data-banner="mailmag-fc">
+                  <a
+                    href="https://yumesuta.com/mailmagazine"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => {
+                      if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+                        window.gtag('event', 'mailmag_cta_click', {
+                          event_category: 'Mailmagazine CTA',
+                          line_segment: 'fc_candidate',
+                          mbti_type: mbtiType,
+                        })
+                      }
+                    }}
+                    className="block bg-amber-600 hover:bg-amber-700 rounded-xl px-4 py-3 shadow-md hover:shadow-lg transition-all"
+                  >
+                    <p className="font-bold text-white text-center text-base">📧 起業・挑戦のヒントを受け取る</p>
                   </a>
                 </div>
                 {/* LINE 公式バナー (= 漆畑さん 01:09Z literal シンプル統一・両カラム同表記・LINE 緑色 #06C755) */}
