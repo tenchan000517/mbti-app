@@ -121,28 +121,32 @@ export default function Home() {
       />
       <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="pt-28 pb-16 px-4">
-        <div className="max-w-5xl mx-auto text-center">
-          <h1 className="sr-only">MBTI性格診断 - 科学的根拠に基づく正確な診断</h1>
-          {/* アイキャッチ画像 - PC用とモバイル用で切り替え */}
-          <div className="mb-10">
+      <section className="pt-4 md:pt-8 pb-12 md:pb-16">
+        <h1 className="sr-only">MBTI性格診断 - 科学的根拠に基づく正確な診断</h1>
+        {/* アイキャッチ画像（モバイル: フルブリード / PC: max-w-5xl + 角丸） */}
+        <div className="mb-8 md:mb-10">
+          {/* PC: 中央寄せ + 角丸 + シャドウ */}
+          <div className="hidden md:block max-w-5xl mx-auto px-4">
             <Image
               src="/img/eyecatch-pc.png"
               alt="MBTI性格診断 - 科学的根拠に基づく無料の性格診断"
               width={1200}
               height={630}
-              className="hidden md:block w-full rounded-2xl shadow-xl"
-              priority
-            />
-            <Image
-              src="/img/eyecatch-mobile.png"
-              alt="MBTI性格診断 - 科学的根拠に基づく無料の性格診断"
-              width={600}
-              height={1000}
-              className="block md:hidden w-full max-w-sm mx-auto rounded-2xl shadow-xl"
+              className="w-full rounded-2xl shadow-xl"
               priority
             />
           </div>
+          {/* Mobile: フルブリード（左右余白なし・角丸なし・シャドウなし） */}
+          <Image
+            src="/img/eyecatch-mobile.png"
+            alt="MBTI性格診断 - 科学的根拠に基づく無料の性格診断"
+            width={600}
+            height={1000}
+            className="block md:hidden w-full h-auto"
+            priority
+          />
+        </div>
+        <div className="text-center px-4">
           <Link
             href="/test"
             className="inline-block bg-blue-500 text-white px-10 py-4 rounded-lg text-xl font-semibold hover:bg-blue-600 transition-all shadow-lg"
@@ -238,116 +242,116 @@ export default function Home() {
           </p>
           <div className="space-y-6">
             {/* E/I */}
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-3 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/ENFP.png" alt="運動家（外向型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-blue-100 text-blue-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     E 外向性
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">人と過ごすことで活力を得る</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">人と過ごすことで活力を得る</p>
                 </div>
-                <div className="px-4 flex flex-col items-center">
-                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
-                  <div className="w-px h-12 bg-gray-300"></div>
+                <div className="px-1 sm:px-4 flex flex-col items-center shrink-0">
+                  <span className="text-gray-400 font-black text-3xl sm:text-5xl md:text-6xl mb-2">VS</span>
+                  <div className="w-px h-8 sm:h-12 bg-gray-300"></div>
                 </div>
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/INFP.png" alt="仲介者（内向型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-blue-100 text-blue-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-blue-100 text-blue-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     I 内向性
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">一人の時間で回復する</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">一人の時間で回復する</p>
                 </div>
               </div>
               <p className="text-center text-gray-600 text-base font-medium">エネルギーの方向と源</p>
             </div>
 
             {/* S/N */}
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-3 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/ISTJ.png" alt="管理者（感覚型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-purple-100 text-purple-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     S 感覚
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">具体的な事実を重視</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">具体的な事実を重視</p>
                 </div>
-                <div className="px-4 flex flex-col items-center">
-                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
-                  <div className="w-px h-12 bg-gray-300"></div>
+                <div className="px-1 sm:px-4 flex flex-col items-center shrink-0">
+                  <span className="text-gray-400 font-black text-3xl sm:text-5xl md:text-6xl mb-2">VS</span>
+                  <div className="w-px h-8 sm:h-12 bg-gray-300"></div>
                 </div>
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/INTJ.png" alt="建築家（直観型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-purple-100 text-purple-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     N 直観
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">可能性やパターンに着目</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">可能性やパターンに着目</p>
                 </div>
               </div>
               <p className="text-center text-gray-600 text-base font-medium">情報の収集方法</p>
             </div>
 
             {/* T/F */}
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-3 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/ENTJ.png" alt="指揮官（思考型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-green-100 text-green-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     T 思考
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">論理と客観性を重視</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">論理と客観性を重視</p>
                 </div>
-                <div className="px-4 flex flex-col items-center">
-                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
-                  <div className="w-px h-12 bg-gray-300"></div>
+                <div className="px-1 sm:px-4 flex flex-col items-center shrink-0">
+                  <span className="text-gray-400 font-black text-3xl sm:text-5xl md:text-6xl mb-2">VS</span>
+                  <div className="w-px h-8 sm:h-12 bg-gray-300"></div>
                 </div>
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/INFJ.png" alt="提唱者（感情型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-green-100 text-green-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-green-100 text-green-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     F 感情
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">価値観と人間関係を重視</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">価値観と人間関係を重視</p>
                 </div>
               </div>
               <p className="text-center text-gray-600 text-base font-medium">判断の基準</p>
             </div>
 
             {/* J/P */}
-            <div className="bg-white rounded-xl shadow-md p-6">
+            <div className="bg-white rounded-xl shadow-md p-3 sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/ESFJ.png" alt="領事（判断型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-orange-100 text-orange-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-orange-100 text-orange-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     J 判断
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">計画的に進める</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">計画的に進める</p>
                 </div>
-                <div className="px-4 flex flex-col items-center">
-                  <span className="text-gray-400 font-black text-6xl mb-2">VS</span>
-                  <div className="w-px h-12 bg-gray-300"></div>
+                <div className="px-1 sm:px-4 flex flex-col items-center shrink-0">
+                  <span className="text-gray-400 font-black text-3xl sm:text-5xl md:text-6xl mb-2">VS</span>
+                  <div className="w-px h-8 sm:h-12 bg-gray-300"></div>
                 </div>
                 <div className="flex-1 flex flex-col items-center text-center">
-                  <div className="relative w-52 h-56 mb-3 overflow-hidden">
+                  <div className="relative w-28 h-32 sm:w-40 sm:h-44 md:w-52 md:h-56 mb-3 overflow-hidden">
                     <Image src="/img/character/ESTP.png" alt="起業家（知覚型）" fill className="object-contain scale-[1.3] -translate-y-[10%]" />
                   </div>
-                  <div className="inline-block bg-orange-100 text-orange-700 px-6 py-3 rounded-lg font-bold text-lg">
+                  <div className="inline-block bg-orange-100 text-orange-700 px-3 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-lg">
                     P 知覚
                   </div>
-                  <p className="text-lg text-gray-700 mt-3 font-medium">柔軟に対応する</p>
+                  <p className="text-xs sm:text-base md:text-lg text-gray-700 mt-2 sm:mt-3 font-medium">柔軟に対応する</p>
                 </div>
               </div>
               <p className="text-center text-gray-600 text-base font-medium">外界への接し方</p>

@@ -11,6 +11,8 @@ import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { Answer, MBTIType, ScorePercentages } from '@/types';
 import CareerExploreSection from '@/components/CareerExploreSection';
+import MbtiSaveCTA from '@/components/MbtiSaveCTA';
+import { saveMbtiHistory } from '@/lib/mbti-history';
 import { GraduationCap, Rocket, Mail, MessageCircle, Check } from 'lucide-react';
 
 declare global {
@@ -40,6 +42,9 @@ export default function BasicResultPage() {
     setMbtiType(result.mbtiType);
     setPercentages(result.percentages);
     setLoading(false);
+
+    // MBTI 履歴を localStorage に保存（同日 entry は最新で上書き）
+    saveMbtiHistory(result.mbtiType);
   }, [router]);
 
   if (loading || !mbtiType || !percentages) {
@@ -80,6 +85,9 @@ export default function BasicResultPage() {
           </div>
 
           <div className="p-8">
+
+          {/* MBTI 結果保存 CTA（専務依頼 2026-05-19・「あなたのタイプ」直下に配置） */}
+          <MbtiSaveCTA ctaLocation="result-page-top" mbtiType={mbtiType} />
 
           <div className="border-t border-gray-200 pt-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">

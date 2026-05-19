@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Factory, ArrowRight } from 'lucide-react'
+import { LayoutGrid, ArrowRight } from 'lucide-react'
 import { getIndustryLinks, CAREER_GUIDE_HUB } from '@/lib/career-industry-mapping'
 
 interface CareerExploreSectionProps {
@@ -60,7 +60,7 @@ export default function CareerExploreSection({ careers }: CareerExploreSectionPr
           rel="noopener noreferrer"
           className="group bg-gray-50 hover:bg-gray-100 rounded-2xl shadow-sm hover:shadow-md flex flex-col items-center justify-center p-6 transition-all duration-200 min-h-[180px]"
         >
-          <Factory className="w-8 h-8 text-gray-400 group-hover:text-emerald-500 mb-2 transition-colors" />
+          <LayoutGrid className="w-8 h-8 text-emerald-400 group-hover:text-emerald-600 mb-2 transition-colors" />
           <span className="text-sm font-bold text-gray-500 group-hover:text-emerald-600 transition-colors">
             もっと見る
           </span>
