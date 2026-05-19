@@ -8,6 +8,7 @@ import { remark } from 'remark';
 import html from 'remark-html';
 import remarkGfm from 'remark-gfm';
 import RelatedArticles from '@/components/RelatedArticles';
+import ArticleCTAStudentLineResident from '@/components/ArticleCTAStudentLineResident';
 
 type Props = {
   params: Promise<{
@@ -216,6 +217,11 @@ export default async function BlogPostPage({ params }: Props) {
             <Link href="/blog" className="text-blue-600 hover:underline">
               ← 記事一覧へ戻る
             </Link>
+          </div>
+
+          {/* 出口 B: 学生向け LINE + 常駐 (マーケ部依頼 2026-05-19) */}
+          <div className="max-w-4xl mx-auto px-4">
+            <ArticleCTAStudentLineResident ctaLocation="blog-article" />
           </div>
         </article>
 

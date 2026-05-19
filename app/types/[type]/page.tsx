@@ -7,6 +7,7 @@ import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { MBTIType } from '@/types';
 import CareerExploreSection from '@/components/CareerExploreSection';
+import ArticleCTAStudentLineResident from '@/components/ArticleCTAStudentLineResident';
 
 interface PageProps {
   params: Promise<{
@@ -275,6 +276,9 @@ export default async function TypeDetailPage({ params }: PageProps) {
             診断を受ける
           </Link>
         </div>
+
+        {/* 出口 B: 学生向け LINE + 常駐 (マーケ部依頼 2026-05-19) */}
+        <ArticleCTAStudentLineResident ctaLocation="type-detail" mbtiType={type.toUpperCase()} />
 
         {/* フッターボタン */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
