@@ -3,21 +3,32 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { LogIn, ArrowRight, RotateCcw, Share2 } from 'lucide-react';
+import { LogIn, ArrowRight, RotateCcw, Share2, Sparkles } from 'lucide-react';
 import { getLatestMbtiEntry, MbtiHistoryEntry } from '@/lib/mbti-history';
 import { getTypeDescription } from '@/lib/type-descriptions';
 import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 
+interface AuthMe {
+  loggedIn: boolean;
+  userId?: string;
+  displayName?: string;
+}
+
 export default function MyPage() {
+  const [auth, setAuth] = useState<AuthMe | undefined>(undefined);
   const [latest, setLatest] = useState<MbtiHistoryEntry | null | undefined>(undefined);
 
   useEffect(() => {
+    fetch('/api/auth/me', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((data: AuthMe) => setAuth(data))
+      .catch(() => setAuth({ loggedIn: false }));
     setLatest(getLatestMbtiEntry());
   }, []);
 
   // 初回 hydration 前
-  if (latest === undefined) {
+  if (latest === undefined || auth === undefined) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
@@ -25,16 +36,14 @@ export default function MyPage() {
     );
   }
 
-  // 未ログイン（履歴ゼロ）
-  if (!latest) {
+  // パターン 1: 未ログイン
+  if (!auth.loggedIn) {
     return (
       <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
         <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">マイページ</h1>
           <p className="text-gray-700 mb-6 leading-relaxed">
             マイページを表示するには LINE ログインが必要です。
-            <br />
-            診断結果を保存していない場合は、まず診断を受けてから保存してください。
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-4">
             <Link
@@ -59,6 +68,42 @@ export default function MyPage() {
     );
   }
 
+  // パターン 2: ログイン済だが診断結果なし（この端末では履歴なし・Brevo 連動は Phase E で実装予定）
+  if (!latest) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
+        <div className="max-w-2xl mx-auto bg-white rounded-2xl shadow-lg p-8 text-center">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">マイページ</h1>
+          {auth.displayName && (
+            <p className="text-sm text-gray-600 mb-4">ようこそ、{auth.displayName} さん</p>
+          )}
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6 text-left">
+            <div className="flex items-start gap-2 mb-2">
+              <Sparkles className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
+              <p className="font-semibold text-gray-900">まずは MBTI 診断を受けましょう</p>
+            </div>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              ログインは完了していますが、まだ診断結果が保存されていません。
+              30 問の質問に答えるとあなたの MBTI タイプが分かり、自動でマイページに保存されます。
+            </p>
+          </div>
+          <Link
+            href="/test"
+            className="inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-xl shadow-lg transition-all"
+          >
+            診断を受ける
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <p className="text-xs text-gray-500 mt-4">
+            ※ 予告なくサービス（保存）を終了する場合があります。
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // パターン 3: ログイン済 + 履歴あり
+
   // ログイン済（最新 entry あり）
   const typeInfo = getTypeDescription(latest.type);
   const { hex } = getTypeColors(latest.type);
@@ -71,7 +116,10 @@ export default function MyPage() {
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">マイページ</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-1">マイページ</h1>
+        {auth.displayName && (
+          <p className="text-sm text-gray-600 mb-1">ようこそ、{auth.displayName} さん</p>
+        )}
         <p className="text-sm text-gray-600 mb-6">{dateLabel} 時点の診断結果を表示しています。</p>
 
         {/* あなたの今の MBTI */}
