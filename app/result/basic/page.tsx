@@ -26,6 +26,7 @@ export default function BasicResultPage() {
   const [mbtiType, setMbtiType] = useState<MBTIType | null>(null);
   const [percentages, setPercentages] = useState<ScorePercentages | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     // localStorageから回答データを取得
@@ -45,6 +46,12 @@ export default function BasicResultPage() {
 
     // MBTI 履歴を localStorage に保存（同日 entry は最新で上書き）
     saveMbtiHistory(result.mbtiType);
+
+    // LINE Login session 状態を取得（ログイン済なら MbtiSaveCTA 非表示）
+    fetch('/api/auth/me', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((data: { loggedIn: boolean }) => setIsLoggedIn(Boolean(data?.loggedIn)))
+      .catch(() => setIsLoggedIn(false));
   }, [router]);
 
   if (loading || !mbtiType || !percentages) {
@@ -86,8 +93,11 @@ export default function BasicResultPage() {
 
           <div className="p-8">
 
-          {/* MBTI 結果保存 CTA（専務依頼 2026-05-19・「あなたのタイプ」直下に配置） */}
-          <MbtiSaveCTA ctaLocation="result-page-top" mbtiType={mbtiType} />
+          {/* MBTI 結果保存 CTA（専務依頼 2026-05-19・「あなたのタイプ」直下に prominent 配置）
+              ログイン済の場合は非表示（既に保存済前提・後続の Phase E で Brevo sync） */}
+          {isLoggedIn === false && (
+            <MbtiSaveCTA ctaLocation="result-page-top" mbtiType={mbtiType} variant="prominent" />
+          )}
 
           <div className="border-t border-gray-200 pt-6 mb-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">

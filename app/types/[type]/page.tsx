@@ -2,10 +2,12 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { getTypeDescription, getAllTypeDescriptions } from '@/lib/type-descriptions';
 import { getTypeImage } from '@/lib/type-images';
 import { getTypeColors } from '@/lib/type-colors';
 import { MBTIType } from '@/types';
+import { SESSION_COOKIE_NAME, verifySession } from '@/lib/line-auth';
 import CareerExploreSection from '@/components/CareerExploreSection';
 import ArticleCTAStudentLineResident from '@/components/ArticleCTAStudentLineResident';
 
@@ -13,7 +15,12 @@ interface PageProps {
   params: Promise<{
     type: string;
   }>;
+  searchParams: Promise<{
+    from?: string;
+  }>;
 }
+
+type CtaContext = 'top' | 'result' | 'mypage';
 
 // 動的メタデータの生成
 export async function generateMetadata({
@@ -72,8 +79,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function TypeDetailPage({ params }: PageProps) {
+export default async function TypeDetailPage({ params, searchParams }: PageProps) {
   const { type } = await params;
+  const { from } = await searchParams;
   const typeCode = type.toUpperCase() as MBTIType;
 
   // 有効なMBTIタイプかチェック
@@ -86,6 +94,26 @@ export default async function TypeDetailPage({ params }: PageProps) {
 
   const typeInfo = getTypeDescription(typeCode);
   const { colors, hex } = getTypeColors(typeCode);
+
+  // CTA 文脈判定：?from= + cookie session で決定
+  // - from=mypage → mypage（マイページ経由）
+  // - from=result → result（診断直後）
+  // - session cookie あり（fromなし）→ mypage 相当（ログイン済の興味本位閲覧）
+  // - それ以外 → top（未ログイン・興味本位）
+  const cookieStore = await cookies();
+  const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  const isLoggedIn = sessionCookie ? verifySession(sessionCookie) !== null : false;
+
+  let ctaContext: CtaContext;
+  if (from === 'mypage' || from === 'mypage-history') {
+    ctaContext = 'mypage';
+  } else if (from === 'result') {
+    ctaContext = 'result';
+  } else if (isLoggedIn) {
+    ctaContext = 'mypage';
+  } else {
+    ctaContext = 'top';
+  }
 
   // 構造化データ（JSON-LD）
   const jsonLd = {
@@ -261,24 +289,33 @@ export default async function TypeDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* CTA セクション */}
-        <div className="bg-gray-50 rounded-lg p-8 text-center mb-8 border-2 border-gray-200">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            あなたのタイプを診断してみませんか？
-          </h3>
-          <p className="text-gray-700 mb-6">
-            この性格タイプの特徴を読んで、自分に当てはまると感じましたか？実際に診断を受けて、あなた自身の性格タイプを確認してみましょう。
-          </p>
-          <Link
-            href="/test"
-            className={`inline-block ${colors.primary} text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-all`}
-          >
-            診断を受ける
-          </Link>
-        </div>
+        {/* 文脈別 CTA（漆畑さん 2026-05-19 指示）
+            - top: 既存「診断してみませんか？」+ ArticleCTAStudentLineResident（診断/LINE/常駐 3 訴求）
+            - result: ArticleCTAStudentLineResident のみ（MbtiSaveCTA は結果ページに既出のため重複させない）
+            - mypage: ArticleCTAStudentLineResident（再診断/キャリア訴求のみ）
+        */}
+        {ctaContext === 'top' && (
+          <div className="bg-gray-50 rounded-lg p-8 text-center mb-8 border-2 border-gray-200">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              あなたのタイプを診断してみませんか？
+            </h3>
+            <p className="text-gray-700 mb-6">
+              この性格タイプの特徴を読んで、自分に当てはまると感じましたか？実際に診断を受けて、あなた自身の性格タイプを確認してみましょう。
+            </p>
+            <Link
+              href="/test"
+              className={`inline-block ${colors.primary} text-white px-8 py-3 rounded-lg font-semibold hover:opacity-90 transition-all`}
+            >
+              診断を受ける
+            </Link>
+          </div>
+        )}
 
-        {/* 出口 B: 学生向け LINE + 常駐 (マーケ部依頼 2026-05-19) */}
-        <ArticleCTAStudentLineResident ctaLocation="type-detail" mbtiType={type.toUpperCase()} />
+        <ArticleCTAStudentLineResident
+          ctaLocation={`type-detail-${ctaContext}`}
+          mbtiType={type.toUpperCase()}
+          context={ctaContext}
+        />
 
         {/* フッターボタン */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
