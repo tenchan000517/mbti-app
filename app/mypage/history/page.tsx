@@ -5,12 +5,46 @@ import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { loadMbtiHistory, MbtiHistoryEntry } from '@/lib/mbti-history';
 import { getTypeDescription } from '@/lib/type-descriptions';
+import type { MBTIType } from '@/types';
+
+interface BrevoState {
+  latestType?: string;
+  latestDate?: string;
+  history?: { type: string; date: string }[];
+}
+
+function mergeHistories(
+  local: MbtiHistoryEntry[],
+  remote: { type: string; date: string }[]
+): MbtiHistoryEntry[] {
+  const map = new Map<string, MbtiHistoryEntry>();
+  // 日付（YYYY-MM-DD）で重複排除・remote 優先（クラウドが真）
+  for (const entry of local) {
+    const dateKey = entry.date.slice(0, 10);
+    map.set(dateKey, { type: entry.type, date: entry.date });
+  }
+  for (const entry of remote) {
+    const dateKey = entry.date.slice(0, 10);
+    map.set(dateKey, { type: entry.type as MBTIType, date: entry.date });
+  }
+  return Array.from(map.values()).sort((a, b) => a.date.localeCompare(b.date));
+}
 
 export default function MyPageHistory() {
   const [history, setHistory] = useState<MbtiHistoryEntry[] | undefined>(undefined);
 
   useEffect(() => {
-    setHistory(loadMbtiHistory());
+    const local = loadMbtiHistory();
+    fetch('/api/mbti/history', { cache: 'no-store' })
+      .then(async (res) => {
+        if (!res.ok) return null;
+        const data = (await res.json()) as { ok?: boolean; state?: BrevoState };
+        return data.ok && data.state?.history ? data.state.history : null;
+      })
+      .then((remote) => {
+        setHistory(remote ? mergeHistories(local, remote) : local);
+      })
+      .catch(() => setHistory(local));
   }, []);
 
   if (history === undefined) {

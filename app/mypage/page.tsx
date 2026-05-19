@@ -15,6 +15,12 @@ interface AuthMe {
   displayName?: string;
 }
 
+interface BrevoState {
+  latestType?: string;
+  latestDate?: string;
+  history?: { type: string; date: string }[];
+}
+
 export default function MyPage() {
   const [auth, setAuth] = useState<AuthMe | undefined>(undefined);
   const [latest, setLatest] = useState<MbtiHistoryEntry | null | undefined>(undefined);
@@ -22,9 +28,32 @@ export default function MyPage() {
   useEffect(() => {
     fetch('/api/auth/me', { cache: 'no-store' })
       .then((r) => r.json())
-      .then((data: AuthMe) => setAuth(data))
-      .catch(() => setAuth({ loggedIn: false }));
-    setLatest(getLatestMbtiEntry());
+      .then(async (data: AuthMe) => {
+        setAuth(data);
+        // ログイン済なら Brevo から取得して localStorage 履歴とマージ（クラウド側が真）
+        if (data.loggedIn) {
+          try {
+            const res = await fetch('/api/mbti/history', { cache: 'no-store' });
+            if (res.ok) {
+              const { ok, state } = (await res.json()) as { ok?: boolean; state?: BrevoState };
+              if (ok && state?.latestType && state.latestDate) {
+                setLatest({
+                  type: state.latestType as MbtiHistoryEntry['type'],
+                  date: state.latestDate,
+                });
+                return;
+              }
+            }
+          } catch {
+            // Brevo 取得失敗 → localStorage fallback
+          }
+        }
+        setLatest(getLatestMbtiEntry());
+      })
+      .catch(() => {
+        setAuth({ loggedIn: false });
+        setLatest(getLatestMbtiEntry());
+      });
   }, []);
 
   // 初回 hydration 前

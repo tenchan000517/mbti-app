@@ -47,10 +47,23 @@ export default function BasicResultPage() {
     // MBTI 履歴を localStorage に保存（同日 entry は最新で上書き）
     saveMbtiHistory(result.mbtiType);
 
-    // LINE Login session 状態を取得（ログイン済なら MbtiSaveCTA 非表示）
+    // LINE Login session 状態を取得（ログイン済なら MbtiSaveCTA 非表示 + Brevo へ自動 sync）
     fetch('/api/auth/me', { cache: 'no-store' })
       .then((r) => r.json())
-      .then((data: { loggedIn: boolean }) => setIsLoggedIn(Boolean(data?.loggedIn)))
+      .then((data: { loggedIn: boolean }) => {
+        const loggedIn = Boolean(data?.loggedIn);
+        setIsLoggedIn(loggedIn);
+        if (loggedIn) {
+          // 既ログイン → Brevo に自動 sync（fire-and-forget・失敗しても UI は壊さない）
+          fetch('/api/mbti/save', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ mbtiType: result.mbtiType }),
+          }).catch(() => {
+            // 黙殺（next visit でリトライ可能）
+          });
+        }
+      })
       .catch(() => setIsLoggedIn(false));
   }, [router]);
 
