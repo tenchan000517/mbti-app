@@ -1,6 +1,6 @@
 # ai.txt - AI Crawler Information
 # Site: mbti.yumesuta.com
-# Last Updated: 2026-03-07
+# Last Updated: 2026-05-20
 
 User-agent: *
 Allow: /
@@ -32,3 +32,6 @@ Related-site: https://academy.yumesuta.com (ゆめスタアカデミー)
 
 # Sitemap
 Sitemap: https://mbti.yumesuta.com/sitemap.xml
+
+# Recent Articles (career)
+- **INFP適職の絞り込み方｜25選から自分に合う3つを見つける4軸診断**: INFPの中の個人差を生む共感軸・創造軸・理念軸・自由軸の4軸でセルフチェックし、適職を3つに絞る方法を解説。既存の網羅型適職リストとは異なり、自分の核となる強みを特定する診断型記事。 → https://mbti.yumesuta.com/blog/career/infp-tekishoku-shindan
